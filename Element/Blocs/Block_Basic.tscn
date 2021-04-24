@@ -28,7 +28,9 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Block" type="Node2D"]
+[node name="Block" type="Node2D" groups=[
+"Blocks",
+]]
 script = ExtResource( 2 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]

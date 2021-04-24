@@ -75,7 +75,7 @@ func _integrate_forces(var s):
 			floor_index = x
 
 		# Find closest Block under feet for drilling
-		if obj && (obj as Node2D).get_parent().get_name().begins_with("Block"):
+		if obj && (obj as Node2D).get_parent().is_in_group("Blocks"):
 			var block = (obj as Node2D).get_parent()
 			var dist = (block.position - position - Vector2(0, 32)).length()
 			if dist < closest_block_dist:
