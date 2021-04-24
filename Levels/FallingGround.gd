@@ -1,11 +1,13 @@
 extends Node2D
 
-signal goto_next_floor
+signal goto_next_floor(breaking_block)
 
-#export(Array, PackedScene) var floors
+const DEFAULT_BREAKING_BLOCK_POSITION = Vector2(11,0)
+var breaking_block_pos = DEFAULT_BREAKING_BLOCK_POSITION
 var floors = []
 var current_level : Node2D
 var next_level : Node2D
+var breaking_block_position
 
 func _ready():
 	load_floors()
@@ -34,7 +36,7 @@ func instanciate_random_level(position):
 	return random_level
 
 func goto_next_level():
-	emit_signal("goto_next_floor")
+	emit_signal("goto_next_floor", breaking_block_pos)
 	current_level = next_level
 	var current_floorbase = current_level.get_node("FloorBase")
 	next_level = instanciate_random_level(current_floorbase.get_node("End").get_global_position())
