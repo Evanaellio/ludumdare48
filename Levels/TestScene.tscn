@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/m5x7_16.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Element/Block_Basic.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Element/Objects/Spike.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Element/Player.tscn" type="PackedScene" id=5]
 
 [node name="Level" type="Node2D"]
@@ -28,6 +29,9 @@ __meta__ = {
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 96, -16 )
+
+[node name="Spike" parent="." instance=ExtResource( 4 )]
+position = Vector2( 208, 88 )
 
 [node name="RigidBody2D" parent="." instance=ExtResource( 3 )]
 position = Vector2( -80, 135.937 )
@@ -151,6 +155,9 @@ position = Vector2( 368, 136 )
 
 [node name="RigidBody2D63" parent="." instance=ExtResource( 3 )]
 position = Vector2( 368, 104 )
+
+[node name="RigidBody2D76" parent="." instance=ExtResource( 3 )]
+position = Vector2( 272, 104 )
 
 [node name="RigidBody2D16" parent="." instance=ExtResource( 3 )]
 position = Vector2( 400, 136 )
