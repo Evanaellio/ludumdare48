@@ -33,7 +33,6 @@ const autoload_list: = {
 	'SettingsAudio'			: 'res://addons/GameTemplate/Autoload/SettingsAudio.gd',
 	'SettingsControls'		: 'res://addons/GameTemplate/Autoload/SettingsControls.gd',
 	'SettingsLanguage'		: 'res://addons/GameTemplate/Autoload/SettingsLanguage.gd',
-	'SettingsResolution'	: 'res://addons/GameTemplate/Autoload/SettingsResolution.gd',
 	'SettingsSaveLoad'		: 'res://addons/GameTemplate/Autoload/SettingsSaveLoad.gd'}
 
 
