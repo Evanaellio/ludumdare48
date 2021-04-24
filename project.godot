@@ -35,7 +35,7 @@ config/icon="res://icon.png"
 SettingsAudio="*res://addons/GameTemplate/Autoload/SettingsAudio.gd"
 SettingsControls="*res://addons/GameTemplate/Autoload/SettingsControls.gd"
 SettingsLanguage="*res://addons/GameTemplate/Autoload/SettingsLanguage.gd"
-SettingsResolution="*res://addons/GameTemplate/Autoload/SettingsResolution.gd"
+SettingsResolution="res://addons/GameTemplate/Autoload/SettingsResolution.gd"
 SettingsSaveLoad="*res://addons/GameTemplate/Autoload/SettingsSaveLoad.gd"
 Settings="*res://addons/GameTemplate/Autoload/Settings.gd"
 Options="*res://addons/GameTemplate/Autoload/Options.tscn"
@@ -58,12 +58,12 @@ gdscript/warnings/return_value_discarded=false
 
 [display]
 
-window/size/width=320
-window/size/height=180
-window/size/test_width=1280
-window/size/test_height=720
+window/size/width=768
+window/size/height=432
+window/size/test_width=768
+window/size/test_height=432
 window/stretch/mode="2d"
-window/stretch/aspect="keep_height"
+window/stretch/aspect="keep"
 
 [editor_plugins]
 

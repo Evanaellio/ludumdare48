@@ -23,7 +23,7 @@ func load_settings()->bool:
 # Resource VARIATION - new version
 func save_settings_resource()->void:
 	var new_save: 			= SaveSettings.new()
-	new_save.resolution 	= SettingsResolution.get_resolution_data()
+	#new_save.resolution 	= SettingsResolution.get_resolution_data()
 	new_save.audio			= SettingsAudio.get_audio_data()
 	new_save.inputs 		= SettingsControls.get_input_data()
 	new_save.language		= SettingsLanguage.get_language_data()
@@ -38,7 +38,7 @@ func load_settings_resource()->bool:
 		return false
 	
 	var new_load:Resource = ResourceLoader.load(CONFIG_DIR + CONFIG_FILE_NAME + CONFIG_EXTENSION, 'Resource', true)
-	SettingsResolution.set_resolution_data(new_load.resolution)
+	#SettingsResolution.set_resolution_data(new_load.resolution)
 	SettingsAudio.set_audio_data(new_load.audio)
 	SettingsControls.set_input_data(new_load.inputs)
 	SettingsLanguage.set_language(new_load.language)
@@ -75,7 +75,7 @@ func load_settings_JSON()->bool:
 func get_save_data_JSON()->Dictionary:
 	var savedata: = {
 		inputs = SettingsControls.get_input_data(),
-		resolution = SettingsResolution.get_resolution_data(),
+		#resolution = SettingsResolution.get_resolution_data(),
 		audio = SettingsAudio.get_audio_data(),
 		language = {locale = SettingsLanguage.get_language_data()}
 		}
@@ -83,7 +83,7 @@ func get_save_data_JSON()->Dictionary:
 
 func set_save_data_JSON(save_data:Dictionary)->void:
 	SettingsControls.set_input_data(save_data.inputs)
-	SettingsResolution.set_resolution_data(save_data.resolution)
+	#SettingsResolution.set_resolution_data(save_data.resolution)
 	SettingsAudio.set_audio_data(save_data.audio)
 	SettingsLanguage.set_language(save_data.language.locale)
 
