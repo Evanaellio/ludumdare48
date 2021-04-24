@@ -9,17 +9,17 @@
 [ext_resource path="res://Assets/Sprite/Player/Scaphandrier_leftfoot.png" type="Texture" id=7]
 [ext_resource path="res://Element/Items/Drill.tscn" type="PackedScene" id=8]
 
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.97918
+height = 1.76339
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5.03243, 5.50014 )
+
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 14, 30 )
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 2.85451
-height = 3.91206
-
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 14, 30 )
-
-[sub_resource type="CapsuleShape2D" id=7]
 radius = 2.85451
 height = 3.91206
 
@@ -34,8 +34,9 @@ extents = Vector2( 4.90765, 5.4375 )
 texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightHand"]
-position = Vector2( -4.66038, 5.48627 )
-shape = SubResource( 3 )
+position = Vector2( -4.24324, 5.65312 )
+rotation = 0.575959
+shape = SubResource( 1 )
 disabled = true
 
 [node name="RightFoot" type="RigidBody2D" parent="."]
@@ -45,7 +46,7 @@ texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightFoot"]
 position = Vector2( -4.92194, 26.4677 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 disabled = true
 
 [node name="PlayerBody" type="RigidBody2D" parent="."]
@@ -73,7 +74,7 @@ polygon = PoolVector2Array( -8, 32, 8, 32, 16, 28, 16, -24, 8, -32, -8, -32, -16
 disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="PlayerBody"]
 texture = ExtResource( 3 )
@@ -95,7 +96,7 @@ texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftHand"]
 position = Vector2( -0.11137, 7.79536 )
-shape = SubResource( 7 )
+shape = SubResource( 4 )
 disabled = true
 
 [node name="LeftFoot" type="RigidBody2D" parent="."]
