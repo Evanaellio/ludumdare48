@@ -1,0 +1,128 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Assets/Sprite/Player/Scaphandrier_lefthand.png" type="Texture" id=1]
+[ext_resource path="res://Element/Player_physics.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sprite/Player/Scaphandrier_body.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprite/Player/Scaphandrier_righthand.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprite/Player/Scaphandrier_head.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprite/Player/Scaphandrier_rightfoot.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprite/Player/Scaphandrier_leftfoot.png" type="Texture" id=7]
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 3.14729
+height = 0.656916
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 4.96598, 5.46773 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 14, 30 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 2.85451
+height = 3.91206
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 4.90765, 5.4375 )
+
+[node name="Player" type="Node2D"]
+
+[node name="RightHand" type="RigidBody2D" parent="."]
+
+[node name="Sprite6" type="Sprite" parent="RightHand"]
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightHand"]
+position = Vector2( -4.66038, 5.48627 )
+shape = SubResource( 3 )
+disabled = true
+
+[node name="RightFoot" type="RigidBody2D" parent="."]
+
+[node name="Sprite5" type="Sprite" parent="RightFoot"]
+texture = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightFoot"]
+position = Vector2( -4.92194, 26.4677 )
+shape = SubResource( 4 )
+disabled = true
+
+[node name="PlayerBody" type="RigidBody2D" parent="."]
+mode = 2
+mass = 50.0
+gravity_scale = 3.0
+continuous_cd = 2
+contacts_reported = 5
+contact_monitor = true
+script = ExtResource( 2 )
+WALK_ACCEL = 2000
+WALK_DEACCEL = 2000
+AIR_ACCEL = 800
+AIR_DEACCEL = 800
+JUMP_VELOCITY = 300
+STOP_JUMP_FORCE = 2000
+
+[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
+current = true
+zoom = Vector2( 2, 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerBody"]
+visible = false
+polygon = PoolVector2Array( -8, 32, 8, 32, 16, 28, 16, -24, 8, -32, -8, -32, -16, -24, -16, 28 )
+disabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
+visible = false
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="PlayerBody"]
+texture = ExtResource( 3 )
+
+[node name="Sprite2" type="Sprite" parent="PlayerBody"]
+texture = ExtResource( 5 )
+
+[node name="LeftHand" type="RigidBody2D" parent="."]
+
+[node name="Sprite4" type="Sprite" parent="LeftHand"]
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftHand"]
+position = Vector2( -0.11137, 7.79536 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="LeftFoot" type="RigidBody2D" parent="."]
+
+[node name="Sprite3" type="Sprite" parent="LeftFoot"]
+texture = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftFoot"]
+position = Vector2( -0.0625, 26.5 )
+shape = SubResource( 5 )
+disabled = true
+
+[node name="Bones" type="Node2D" parent="."]
+
+[node name="LeftArm" type="PinJoint2D" parent="Bones"]
+position = Vector2( 1, -3.5 )
+node_a = NodePath("../../PlayerBody")
+node_b = NodePath("../../LeftHand")
+softness = 3.0
+
+[node name="RightArm" type="PinJoint2D" parent="Bones"]
+position = Vector2( -1, -3.5 )
+node_a = NodePath("../../PlayerBody")
+node_b = NodePath("../../RightHand")
+softness = 3.0
+
+[node name="LeftLeg" type="PinJoint2D" parent="Bones"]
+position = Vector2( 1, 7 )
+node_a = NodePath("../../PlayerBody")
+node_b = NodePath("../../LeftFoot")
+softness = 1.0
+
+[node name="RightLeg" type="PinJoint2D" parent="Bones"]
+position = Vector2( -1, 7 )
+node_a = NodePath("../../PlayerBody")
+node_b = NodePath("../../RightFoot")
+softness = 1.0
