@@ -14,7 +14,12 @@ func _ready():
 
 
 func _on_BumperDetect_body_entered(body):
-	pass
+	var p = self.get_path_to(body)
+	var name = p.get_name(p.get_name_count() - 1)
+	
+	if name == "Player" or name.begins_with("Player"):
+		var player = get_node(p)
+		player.knockback(Vector2(0, -25))
 
 
 func _on_BumperDetect_body_exited(body):
@@ -22,13 +27,13 @@ func _on_BumperDetect_body_exited(body):
 
 
 func _on_PlayerDetect_body_entered(body):
-	if body.name == "Player":
+	if body.name == "PlayerBody":
 		anim_idle_position = get_node("AnimationPlayer").current_animation_position
 		get_node("AnimationPlayer").play("growing-once")
 
 
 func _on_PlayerDetect_body_exited(body):
-	if body.name == "Player":
+	if body.name == "PlayerBody":
 		anim_idle_position = get_node("AnimationPlayer").current_animation_position
 		get_node("AnimationPlayer").play("shrinking-once")
 

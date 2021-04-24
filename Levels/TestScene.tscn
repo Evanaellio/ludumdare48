@@ -260,16 +260,15 @@ position = Vector2( 656, 328.063 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 
+[node name="Sprite2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 512.654, 86.9743 )
+
+[node name="Seastar" parent="." instance=ExtResource( 5 )]
+position = Vector2( 320.32, 101.824 )
+
+[node name="Sprite3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 275.772, 36.7697 )
+
 [node name="Spike" parent="." instance=ExtResource( 7 )]
 position = Vector2( 176, 88 )
-
-[node name="Sprite2" parent="Spike" instance=ExtResource( 8 )]
-position = Vector2( 40, -144 )
-
-[node name="Seastar" parent="Spike" instance=ExtResource( 5 )]
-position = Vector2( 136, 8 )
-
-[node name="Sprite3" parent="Spike" instance=ExtResource( 6 )]
-position = Vector2( -88.8, -62.8 )
-
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_Button_pressed"]

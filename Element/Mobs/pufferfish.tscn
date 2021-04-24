@@ -3,7 +3,6 @@
 [ext_resource path="res://Assets/Sprite/Moving/Pufferfish.png" type="Texture" id=1]
 [ext_resource path="res://Element/Mobs/pufferfish.gd" type="Script" id=2]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 24.0
 
@@ -70,26 +69,29 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
 }
 
-[node name="Sprite" type="Sprite"]
+[node name="Pufferfish" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="BumperDetect" type="Area2D" parent="."]
+[node name="BumperDetect" type="Area2D" parent="Sprite"]
 
-[node name="BumpShape" type="CollisionShape2D" parent="BumperDetect"]
+[node name="BumpShape" type="CollisionShape2D" parent="Sprite/BumperDetect"]
 shape = SubResource( 1 )
 
-[node name="PlayerDetect" type="Area2D" parent="."]
+[node name="PlayerDetect" type="Area2D" parent="Sprite"]
 
-[node name="AlertShape" type="CollisionShape2D" parent="PlayerDetect"]
+[node name="AlertShape" type="CollisionShape2D" parent="Sprite/PlayerDetect"]
 shape = SubResource( 2 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 anims/growing-once = SubResource( 3 )
 anims/idle-loop = SubResource( 4 )
 anims/shrinking-once = SubResource( 5 )
-[connection signal="body_entered" from="BumperDetect" to="." method="_on_BumperDetect_body_entered"]
-[connection signal="body_exited" from="BumperDetect" to="." method="_on_BumperDetect_body_exited"]
-[connection signal="body_entered" from="PlayerDetect" to="." method="_on_PlayerDetect_body_entered"]
-[connection signal="body_exited" from="PlayerDetect" to="." method="_on_PlayerDetect_body_exited"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_entered"]
+[connection signal="body_exited" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_exited"]
+[connection signal="body_entered" from="Sprite/PlayerDetect" to="Sprite" method="_on_PlayerDetect_body_entered"]
+[connection signal="body_exited" from="Sprite/PlayerDetect" to="Sprite" method="_on_PlayerDetect_body_exited"]
+[connection signal="animation_finished" from="Sprite/AnimationPlayer" to="Sprite" method="_on_AnimationPlayer_animation_finished"]
