@@ -72,7 +72,7 @@ polygon = PoolVector2Array( -8, 32, 8, 32, 16, 28, 16, -24, 8, -32, -8, -32, -16
 disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody"]
-visible = false
+visible = true
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="PlayerBody"]
