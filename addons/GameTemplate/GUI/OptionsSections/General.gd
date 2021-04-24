@@ -23,14 +23,15 @@ func _ready()->void:
 	
 	MenuEvent.connect("Controls", self, "on_show_controls")
 	MenuEvent.connect("Languages", self, "on_show_languages")
-	SettingsResolution.connect("Resized", self, "_on_Resized")
+	#SettingsResolution.connect("Resized", self, "_on_Resized")
 	#Localization
 	SettingsLanguage.connect("ReTranslate", self, "retranslate")
 	retranslate()
 
 func set_resolution()->void:
-	find_node("Fullscreen").pressed = SettingsResolution.Fullscreen
-	find_node("Borderless").pressed = SettingsResolution.Borderless
+	pass
+	#find_node("Fullscreen").pressed = SettingsResolution.Fullscreen
+	#find_node("Borderless").pressed = SettingsResolution.Borderless
 	#Your logic for scaling
 
 func set_volume_sliders()->void: #Initialize volume sliders
@@ -58,19 +59,24 @@ func _on_SFX_value_changed(value)->void:
 	player.play()
 
 func _on_Fullscreen_pressed()->void:
-	SettingsResolution.Fullscreen = find_node("Fullscreen").pressed
+	pass
+	#SettingsResolution.Fullscreen = find_node("Fullscreen").pressed
 
 func _on_Borderless_pressed()->void:
-	SettingsResolution.Borderless = find_node("Borderless").pressed
+	pass
+	#SettingsResolution.Borderless = find_node("Borderless").pressed
 
 func _on_ScaleUp_pressed()->void:
-	SettingsResolution.Scale += 1
+	pass
+	#SettingsResolution.Scale += 1
 
 func _on_ScaleDown_pressed()->void:
-	SettingsResolution.Scale -= 1
+	pass
+	#SettingsResolution.Scale -= 1
 
 func _on_Resized()->void:
-	set_resolution()
+	pass
+	#set_resolution()
 
 func _on_Controls_pressed()->void:
 	MenuEvent.Controls = true
@@ -95,11 +101,7 @@ func on_show_languages(value:bool)->void:
 
 #Localization
 func retranslate()->void:
-	find_node("Resolution").text 					= tr("RESOLUTION")
 	find_node("Volume").text 						= tr("VOLUME")
-	find_node("Fullscreen").text 					= tr("FULLSCREEN")
-	find_node("Borderless").text 					= tr("BORDERLESS")
-	find_node("Scale").text 						= tr("SCALE")
 	find_node("Master").get_node("ScaleName").text	= tr("MASTER")
 	find_node("Music").get_node("ScaleName").text 	= tr("MUSIC")
 	find_node("SFX").get_node("ScaleName").text 	= tr("SFX")

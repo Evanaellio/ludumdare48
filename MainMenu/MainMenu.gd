@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-export (String, FILE, "*.tscn") var First_Level: String
+export (PackedScene) var First_Level: PackedScene
 
 func _ready()->void:
 	get_tree().get_nodes_in_group("MainMenu")[0].grab_focus()					#Godot doesn't have buttons auto grab_focus when noone has focus
