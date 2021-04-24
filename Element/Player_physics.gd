@@ -31,35 +31,14 @@ var last_falling_speed = 0.0
 var velocity = Vector2.ZERO
 var player_acceleration = Vector2.ZERO
 
+var drilling = false
+var closest_block: Node2D = null
+
 func _ready():
 	pass # Replace with function body.
 
-#func get_input():
-#	player_acceleration.x = 0
-#	if Input.is_action_pressed("Right"):
-#		player_acceleration.x += acceleration
-#	if Input.is_action_pressed("Left"):
-#		player_acceleration.x -= acceleration
-
-#func _physics_process(delta):
-##	get_input()
-#
-#	if player_acceleration.length() > 0:
-#		velocity += player_acceleration * delta
-#		velocity.x = clamp(velocity.x, -max_speed, max_speed)
-#	else:
-#		velocity.x *= deceleration
-#
-#	if velocity.length() < 1:
-#		velocity = Vector2.ZERO
-#
-##	velocity.y += gravity * delta
-#	#velocity = move_and_slide(velocity, Vector2.UP)
-#
-#	if Input.is_action_just_pressed("Jump"):
-#		if is_on_floor():
-#			velocity.y = jump_speed
-
+func _input(event):
+	set_drilling(Input.is_action_pressed("Drill"))
 
 func _integrate_forces(var s):
 
@@ -70,9 +49,9 @@ func _integrate_forces(var s):
 	var new_siding_left = siding_left
 
 	# Get the controls
-	var move_left = Input.is_action_pressed("Left")
-	var move_right = Input.is_action_pressed("Right")
-	var jump = Input.is_action_pressed("Jump")
+	var move_left = Input.is_action_pressed("Left") && !drilling
+	var move_right = Input.is_action_pressed("Right") && !drilling
+	var jump = Input.is_action_pressed("Jump") && !drilling
 
 	if jump:
 		jump = true
@@ -84,12 +63,24 @@ func _integrate_forces(var s):
 	# Find the floor (a contact with upwards facing collision normal)
 	var found_floor = false
 	var floor_index = -1
+	var closest_block_dist = 9999
+	closest_block = null
 
 	for x in range(s.get_contact_count()):
 		var ci = s.get_contact_local_normal(x)
+		var obj = s.get_contact_collider_object(x);
+
 		if ci.dot(Vector2(0, -1)) > 0.6:
 			found_floor = true
 			floor_index = x
+
+		# Find closest Block under feet for drilling
+		if obj && (obj as Node2D).get_parent().get_name().begins_with("Block"):
+			var block = (obj as Node2D).get_parent()
+			var dist = (block.position - position - Vector2(0, 32)).length()
+			if dist < closest_block_dist:
+				closest_block_dist = dist
+				closest_block = block
 
 	if found_floor:
 		airborne_time = 0.0
@@ -189,8 +180,21 @@ func _integrate_forces(var s):
 
 	# Finally, apply gravity and set back the linear velocity
 	lv += s.get_total_gravity() * step
-	print(lv)
 	s.set_linear_velocity(lv)
 
 func knockback(vector):
 	apply_impulse(Vector2(0,0), vector * TERMINAL_SPEED)
+
+func set_drilling(new_drilling):
+	if !drilling && new_drilling:
+		$DrillingTimer.start()
+	if drilling && !new_drilling:
+		$DrillingTimer.stop()
+	drilling = new_drilling
+	$Drill.visible = drilling
+
+func _on_DrillingTimer_timeout():
+	if drilling && closest_block:
+		closest_block.do_damage()
+	else:
+		$DrillingTimer.stop()
