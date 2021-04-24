@@ -29,5 +29,16 @@ func do_damage():
 		destroy()
 	set_damage(DAMAGE + 1)
 
-func destroy():
-	queue_free()
+func destroy(): # Yes, but actually no
+	$StaticBody2D/Block_grass.visible = false
+	$StaticBody2D/DamageSprite.visible = false
+	$StaticBody2D/CollisionShape2D.disabled = true
+
+func self_destruct_after(time):
+	yield(get_tree().create_timer(time), "timeout")
+	do_damage()
+	
+	for i in range(3):
+		yield(get_tree().create_timer(0.06), "timeout")
+		do_damage()
+	

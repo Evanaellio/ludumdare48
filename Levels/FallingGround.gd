@@ -2,8 +2,7 @@ extends Node2D
 
 signal goto_next_floor(breaking_block)
 
-const DEFAULT_BREAKING_BLOCK_POSITION = Vector2(11,0)
-var breaking_block_pos = DEFAULT_BREAKING_BLOCK_POSITION
+var breaking_block_pos = Vector2.ZERO
 var floors = []
 var current_level : Node2D
 var next_level : Node2D
@@ -11,7 +10,6 @@ var breaking_block_position
 
 func _ready():
 	load_floors()
-	print(floors)
 	next_level = instanciate_random_level(transform.origin)
 	goto_next_level()
 
@@ -31,19 +29,18 @@ func load_floors():
 func instanciate_random_level(position):
 	var choice = floors[randi() % floors.size()]
 	var random_level =  choice.instance()
-	random_level.set_position(position)
+	random_level.global_position = position
 	add_child(random_level)
 	return random_level
 
 func goto_next_level():
 	emit_signal("goto_next_floor", breaking_block_pos)
+	breaking_block_pos = Vector2.ZERO
 	current_level = next_level
 	var current_floorbase = current_level.get_node("FloorBase")
 	next_level = instanciate_random_level(current_floorbase.get_node("End").get_global_position())
 	self.connect("goto_next_floor", current_floorbase, "_on_Floor_goto_next_floor")
-	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-	
+
+func _on_PlayerBody_dig_block(position):
+	breaking_block_pos = position

@@ -20,3 +20,6 @@ autostart = true
 position = Vector2( 192.19, 110.23 )
 
 [connection signal="timeout" from="Timer" to="." method="goto_next_level"]
+[connection signal="dig_block" from="Player/PlayerBody" to="." method="_on_PlayerBody_dig_block"]
+
+[editable path="Player"]

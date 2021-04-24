@@ -17,3 +17,5 @@ position = Vector2( 0, 224 )
 __meta__ = {
 "_editor_description_": "End of the current floor / position where the next floor will be spawned."
 }
+
+[node name="Blocks" type="Node" parent="."]
