@@ -4,7 +4,6 @@ extends Sprite
 var anim_idle_position
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	self.scale.x = 0.5;
 	self.scale.y = 0.5;

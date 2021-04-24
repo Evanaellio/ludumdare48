@@ -77,10 +77,11 @@ func _integrate_forces(var s):
 		# Find closest Block under feet for drilling
 		if obj && (obj as Node2D).get_parent().is_in_group("Blocks"):
 			var block = (obj as Node2D).get_parent()
-			var dist = (block.position - position - Vector2(0, 32)).length()
-			if dist < closest_block_dist:
-				closest_block_dist = dist
-				closest_block = block
+			if block.position.y > position.y + 32:
+				var dist = (block.position - position - Vector2(0, 32)).length()
+				if dist < closest_block_dist:
+					closest_block_dist = dist
+					closest_block = block
 
 	if found_floor:
 		airborne_time = 0.0
@@ -196,5 +197,3 @@ func set_drilling(new_drilling):
 func _on_DrillingTimer_timeout():
 	if drilling && closest_block:
 		closest_block.do_damage()
-	else:
-		$DrillingTimer.stop()
