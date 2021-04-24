@@ -11,7 +11,7 @@ extents = Vector2( 64, 16 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle-loop"
-length = 4.0
+length = 8.0
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -20,10 +20,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5, 3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 2, 4, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 3, -2 ), Vector2( -2, 3 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 22, -0.333 ), Vector2( -2, 3 ), Vector2( -23, 1.5 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rotation_degrees")
@@ -44,7 +44,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 2, 4 ),
+"times": PoolRealArray( 0, 4, 8 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ) ]
@@ -53,7 +53,11 @@ tracks/2/keys = {
 [node name="Shark" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 16.0172, 0.497855 )
+rotation = -0.174031
+scale = Vector2( -0.249282, 1 )
 texture = ExtResource( 1 )
+flip_h = true
 script = ExtResource( 2 )
 
 [node name="BumperDetect" type="Area2D" parent="Sprite"]
