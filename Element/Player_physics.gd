@@ -193,6 +193,7 @@ func set_drilling(new_drilling):
 		$DrillingTimer.stop()
 	drilling = new_drilling
 	$Drill.visible = drilling
+	$Drill.get_node("CPUParticles2D").emitting = drilling
 
 func _on_DrillingTimer_timeout():
 	if drilling && closest_block:
