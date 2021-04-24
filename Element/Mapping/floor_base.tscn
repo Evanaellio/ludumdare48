@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Element/Mapping/tileset_gen.tres" type="TileSet" id=1]
+[ext_resource path="res://Element/Mapping/Floor.gd" type="Script" id=2]
+
+[node name="FloorBase" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 23, 1, 0, 65536, 1, 0, 65559, 1, 0, 131072, 1, 0, 131095, 1, 0, 196608, 1, 0, 196631, 1, 0, 262144, 1, 0, 262167, 1, 0, 327680, 1, 0, 327703, 1, 0, 393216, 1, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 393234, 0, 0, 393235, 0, 0, 393236, 0, 0, 393237, 0, 0, 393238, 0, 0, 393239, 1, 0 )
+
+[node name="End" type="Position2D" parent="."]
+position = Vector2( 0, 224 )
+__meta__ = {
+"_editor_description_": "End of the current floor / position where the next floor will be spawned."
+}
