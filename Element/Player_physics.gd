@@ -191,3 +191,6 @@ func _integrate_forces(var s):
 	lv += s.get_total_gravity() * step
 	print(lv)
 	s.set_linear_velocity(lv)
+
+func knockback(vector):
+	apply_impulse(Vector2(0,0), vector * TERMINAL_SPEED)
