@@ -1,0 +1,102 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprite/Light/Round_Light.png" type="Texture" id=2]
+[ext_resource path="res://Element/Objects/modern_boat.gd" type="Script" id=3]
+
+[sub_resource type="OccluderPolygon2D" id=2]
+polygon = PoolVector2Array( -84.3215, 6.09293, -75.3547, 17.8914, -59.5448, 21.9028, -8.57559, 20.723, 74.7213, 12.936, 104.689, -1.92999, 109.173, 3.02534, 82.9802, 50.927, -64.7361, 53.2867, -110.75, 1.1376 )
+
+[sub_resource type="OccluderPolygon2D" id=3]
+polygon = PoolVector2Array( -45.1507, -20.0996, -60.7246, 22.3748, 7.47028, 19.5431, 1.80702, -26.9427 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "idle-loop"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 5, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1.5, 0.5 ), Vector2( -4, 1 ), Vector2( 0.5, -1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2, 4, 7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -1.5, 2.0, -2.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RedPosLight:enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 4, 4.1, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, false, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("GreenPosLight:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 4.9, 5, 9, 9.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true, false ]
+}
+
+[node name="Modernboat" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.567557, 0.189186 )
+rotation = -0.0074293
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="RedPosLight" type="Light2D" parent="Sprite"]
+position = Vector2( -18, -26 )
+texture = ExtResource( 2 )
+texture_scale = 3.0
+color = Color( 1, 0.0784314, 0.0784314, 1 )
+shadow_enabled = true
+
+[node name="GreenPosLight" type="Light2D" parent="Sprite"]
+position = Vector2( -18, -26 )
+enabled = false
+texture = ExtResource( 2 )
+texture_scale = 3.0
+color = Color( 0.0784314, 1, 0.0784314, 1 )
+shadow_enabled = true
+shadow_item_cull_mask = 3
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprite"]
+light_mask = 3
+occluder = SubResource( 2 )
+light_mask = 3
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Sprite"]
+light_mask = 2
+occluder = SubResource( 3 )
+light_mask = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+anims/idle-loop = SubResource( 1 )
+[connection signal="animation_finished" from="Sprite/AnimationPlayer" to="Sprite" method="_on_AnimationPlayer_animation_finished"]
