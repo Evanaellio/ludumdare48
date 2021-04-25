@@ -37,10 +37,12 @@ func destroy(): # Yes, but actually no
 	$StaticBody2D/CollisionShape2D.disabled = true
 
 func self_destruct_after(delay, angle):
-	$Tween.interpolate_method(self, "set_damage", DAMAGE, MAX_DAMAGE, 1, Tween.TRANS_QUAD, Tween.EASE_IN, delay)
-	$Tween.interpolate_property(self, "scale", scale, Vector2.ZERO, 0.3, Tween.TRANS_QUAD, Tween.EASE_IN, delay + 1.10)
-	$Tween.interpolate_property(self, "rotation_degrees", rotation_degrees, angle, 0.4, Tween.TRANS_QUAD, Tween.EASE_IN, delay + 1)
-	$Tween.interpolate_property(self, "position", position, position + 64 * Vector2.DOWN, 0.4, Tween.TRANS_QUAD, Tween.EASE_IN, delay + 1)
+	var transition = Tween.TRANS_CUBIC
+	var easing = Tween.EASE_IN
+	$Tween.interpolate_method(self, "set_damage", DAMAGE + 2, MAX_DAMAGE, 0.4, transition, easing, delay)
+	$Tween.interpolate_property(self, "scale", scale, Vector2.ZERO, 0.3, transition, easing, delay + 0.1)
+	$Tween.interpolate_property(self, "rotation_degrees", rotation_degrees, angle, 0.4, transition, easing, delay)
+	$Tween.interpolate_property(self, "position", position, position + 64 * Vector2.DOWN, 0.4, transition, easing, delay)
 	$Tween.start()
 
 func _on_Tween_tween_all_completed():
