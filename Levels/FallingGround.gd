@@ -20,8 +20,9 @@ var themes = ["Basic", "Wood"]
 
 var mobs = {
 	"Basic": {
-		"seastar": 50,
-		"pufferfish": 40,
+		"seastar": 40,
+		"pufferfish": 30,
+		"squid": 30
 	},
 	"Wood": {
 		"ghost": 45,
