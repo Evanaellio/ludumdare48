@@ -6,6 +6,7 @@ var jumping = false
 var stopping_jump = false
 
 signal dig_block(position)
+signal hp_changed(hp)
 
 export (int) var WALK_ACCEL = 800.0
 export (int) var WALK_DEACCEL = 800.0
@@ -15,6 +16,8 @@ export (int) var AIR_DEACCEL = 200.0
 export (int) var JUMP_VELOCITY = 460
 export (int) var STOP_JUMP_FORCE = 900.0
 export (int) var TERMINAL_SPEED = 800.0
+
+export (int) var HP = 3
 
 # export (int) var max_speed = 200
 # export (int) var acceleration = 1000
@@ -197,6 +200,11 @@ func _integrate_forces(var s):
 
 func knockback(vector):
 	apply_impulse(Vector2(0,0), vector * TERMINAL_SPEED)
+
+func hurt():
+	HP = HP - 1
+	print("HP=" + str(HP))
+	emit_signal("hp_changed", HP)
 
 func set_drilling(new_drilling):
 	if !drilling && new_drilling:

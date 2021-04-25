@@ -1,11 +1,29 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Levels/FallingGround.gd" type="Script" id=1]
 [ext_resource path="res://Levels/Camera2D.gd" type="Script" id=2]
 [ext_resource path="res://Element/Player_physics.tscn" type="PackedScene" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprite/Player/heart.png" type="Texture" id=5]
+[ext_resource path="res://MainMenu/GameOver.tscn" type="PackedScene" id=6]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 5 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
 
 // Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
@@ -74,13 +92,13 @@ void fragment(){
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
 shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
 shader_param/sprite_scale = Vector2( 10, 10 )
 shader_param/scale_x = 1.0
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="Shader" id=6]
 code = "shader_type canvas_item;
 
 // Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
@@ -122,7 +140,7 @@ void fragment(){
 	vec2 distort1 = vec2(noise(noisecoord1 + motion1), noise(noisecoord2 + motion1)) - vec2(0.5);
 	vec2 distort2 = vec2(noise(noisecoord1 + motion2), noise(noisecoord2 + motion2)) - vec2(0.5);
 	
-	vec2 distort_sum = (distort1 + distort2) / 10.0;
+	vec2 distort_sum = (distort1 + distort2) / 60.0;
 	
 	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV + distort_sum, 0.0);
 	
@@ -149,14 +167,13 @@ void fragment(){
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
 shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
-shader_param/sprite_scale = Vector2( 5, 2 )
+shader_param/sprite_scale = Vector2( 4, 4 )
 shader_param/scale_x = 2.0
 
-[sub_resource type="Animation" id=5]
-resource_name = "Water"
+[sub_resource type="Animation" id=8]
 length = 2.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("WaterCurrent:rotation_degrees")
@@ -221,6 +238,26 @@ tracks/4/keys = {
 
 [node name="FallingGround" type="Node2D"]
 script = ExtResource( 1 )
+RIP_Screen = ExtResource( 6 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HP" type="Node2D" parent="CanvasLayer"]
+
+[node name="Heart1" type="AnimatedSprite" parent="CanvasLayer/HP"]
+position = Vector2( 24, 18 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 3 )
+
+[node name="Heart2" type="AnimatedSprite" parent="CanvasLayer/HP"]
+position = Vector2( 60, 18 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 3 )
+
+[node name="Heart3" type="AnimatedSprite" parent="CanvasLayer/HP"]
+position = Vector2( 96, 18 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 384, 216 )
@@ -241,25 +278,25 @@ position = Vector2( 192.19, 110.23 )
 [node name="WaterLayer" type="Node2D" parent="."]
 
 [node name="WaterCurrent" type="Sprite" parent="WaterLayer"]
-material = SubResource( 2 )
+material = SubResource( 5 )
 position = Vector2( 384, 265.723 )
 scale = Vector2( 12, 4.68729 )
 texture = ExtResource( 4 )
 
 [node name="WaterNext" type="Sprite" parent="WaterLayer"]
-material = SubResource( 4 )
+material = SubResource( 7 )
 position = Vector2( 384, 500 )
 scale = Vector2( 12, 1e-05 )
 texture = ExtResource( 4 )
 
 [node name="WaterNextNext" type="Sprite" parent="WaterLayer"]
-material = SubResource( 4 )
+material = SubResource( 7 )
 position = Vector2( 384, 624 )
 scale = Vector2( 12, 1.5 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WaterLayer"]
-anims/Water = SubResource( 5 )
+anims/Water = SubResource( 8 )
 
 [connection signal="timeout" from="CollapseTimer" to="." method="goto_next_level"]
 [connection signal="timeout" from="WaterfallTimer" to="." method="_on_WaterfallTimer_timeout"]

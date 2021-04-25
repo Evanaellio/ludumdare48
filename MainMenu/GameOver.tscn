@@ -1,0 +1,249 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://addons/GameTemplate/GUI/Buttons/DefaultButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/GameTemplate/Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Sprite/Static/RIP.png" type="Texture" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://MainMenu/GameOver.gd" type="Script" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0941176, 0.0784314, 0.145098, 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 72
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 0.0
+content_margin_bottom = 1.0
+bg_color = Color( 0.0705882, 0.305882, 0.537255, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 0.0
+content_margin_bottom = 1.0
+bg_color = Color( 0.227451, 0.266667, 0.4, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=5]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 0.0
+content_margin_bottom = 1.0
+bg_color = Color( 0.14902, 0.168627, 0.266667, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.0705882, 0.305882, 0.537255, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=6]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 0.0
+content_margin_bottom = 1.0
+bg_color = Color( 0.14902, 0.168627, 0.266667, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0 )
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="DynamicFont" id=7]
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+
+// Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
+// If you use this shader, I would prefer if you gave credit to me and my channel
+
+uniform vec4 blue_tint : hint_color;
+
+uniform vec2 sprite_scale;
+uniform float scale_x = 1; //0.67;
+
+float rand(vec2 coord){
+	return fract(sin(dot(coord, vec2(12.9898, 78.233)))* 43758.5453123);
+}
+
+float noise(vec2 coord){
+	vec2 i = floor(coord);
+	vec2 f = fract(coord);
+
+	// 4 corners of a rectangle surrounding our point
+	float a = rand(i);
+	float b = rand(i + vec2(1.0, 0.0));
+	float c = rand(i + vec2(0.0, 1.0));
+	float d = rand(i + vec2(1.0, 1.0));
+
+	vec2 cubic = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
+}
+
+void fragment(){
+	
+	vec2 noisecoord1 = UV * sprite_scale * scale_x;
+	vec2 noisecoord2 = UV * sprite_scale * scale_x + 4.0;
+	
+	vec2 motion1 = vec2(TIME * 0.8, TIME * -0.4);
+	vec2 motion2 = vec2(TIME * 0.1, TIME * 0.5);
+	
+	
+	vec2 distort1 = vec2(noise(noisecoord1 + motion1), noise(noisecoord2 + motion1)) - vec2(0.5);
+	vec2 distort2 = vec2(noise(noisecoord1 + motion2), noise(noisecoord2 + motion2)) - vec2(0.5);
+	
+	vec2 distort_sum = (distort1 + distort2) / 60.0;
+	
+	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV + distort_sum, 0.0);
+	
+	color = mix(color, blue_tint, 0.3);
+	color.rgb = mix(vec3(0.5), color.rgb, 1.4);
+	
+	float near_top = (UV.y + distort_sum.y) / (0.2 / sprite_scale.y);
+	near_top = clamp(near_top, 0.0, 1.0);
+	near_top = 1.0 - near_top;
+	
+	color = mix(color, vec4(1.0), near_top);
+	
+	float edge_lower = 0.7;
+	float edge_upper = edge_lower + 0.3;
+	
+	if(near_top > edge_lower){
+		color.a = 0.0;
+		
+		if(near_top < edge_upper){
+			color.a = (edge_upper - near_top) / (edge_upper - edge_lower);
+		}
+	}
+	
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
+shader_param/sprite_scale = Vector2( 4, 4 )
+shader_param/scale_x = 2.0
+
+[sub_resource type="Animation" id=10]
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WaterNext:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 384, 188 ), Vector2( 384, 700 ) ]
+}
+
+[node name="RIP" type="CanvasLayer"]
+layer = 0
+script = ExtResource( 6 )
+
+[node name="BG" type="Panel" parent="."]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 606, 208 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 154.0
+margin_top = 120.0
+margin_right = 402.0
+margin_bottom = 177.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0.784314, 1, 1 )
+text = "GAME OVER"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewGame" parent="." groups=[
+"MainMenu",
+] instance=ExtResource( 1 )]
+margin_left = 196.0
+margin_top = 260.0
+margin_right = 347.0
+margin_bottom = 299.0
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 6 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
+text = "Try Again"
+
+[node name="WaterNext" type="Sprite" parent="."]
+material = SubResource( 9 )
+position = Vector2( 384, 700 )
+scale = Vector2( 12, 8 )
+texture = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+method_call_mode = 1
+anims/RIP = SubResource( 10 )
+
+[connection signal="pressed" from="NewGame" to="." method="_on_NewGame_pressed"]
