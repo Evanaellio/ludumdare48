@@ -3,13 +3,13 @@ extends Node2D
 export (int) var DAMAGE = 0 setget set_damage
 
 export (bool) var Grassy = true
-export (String) var Sprite_Type = "Basic"
+export(String, "Basic", "Wood") var Sprite_Type = "Basic"
 export (bool) var Hidden_Coin = false
 
 const MAX_DAMAGE = 3
 
 func _ready():
-	if Sprite_Type != "Basic":
+	if !Grassy || Sprite_Type != "Basic" :
 		get_node("StaticBody2D/Basic/Block_grass").set_visible(false)
 		get_sprite_node().set_visible(true)
 	update_grass(Grassy)
