@@ -11,6 +11,7 @@ export (int) var CoinsCount = 5
 var spike = preload("res://Element/Objects/Spike.tscn")
 
 var can_collapse_floor = false # Blocks at the bottom of the floor
+var is_wall = false # Blocks at the side
 
 signal drilled_coin(coinsCount)
 

@@ -27,6 +27,7 @@ func configure_block(tile_pos, tile):
 	new_block.Grassy = (tile_above == Tiles.EMPTY and not tile_pos.y == 0)
 	new_block.Hidden_Coin = (tile == Tiles.COIN)
 	new_block.Spiky = (tile == Tiles.SPIKE)
+	new_block.is_wall = (tile == Tiles.WALL)
 	
 	
 	# Forward drilled signal to FallingGround
@@ -44,7 +45,8 @@ func _on_Floor_goto_next_floor(starting_pos_signal : Vector2):
 			starting_pos = starting_pos_signal
 	
 		for block in $Blocks.get_children():
-			block_distance[block] = starting_pos.distance_to(block.global_position)
+			if not block.is_wall:
+				block_distance[block] = starting_pos.distance_to(block.global_position)
 	
 		var blocks = block_distance.keys()
 		blocks.sort_custom(self, "distance_to_starting_pos")
