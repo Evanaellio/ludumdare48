@@ -16,6 +16,7 @@ export (int) var AIR_DEACCEL = 200.0
 export (int) var JUMP_VELOCITY = 460
 export (int) var STOP_JUMP_FORCE = 900.0
 export (int) var TERMINAL_SPEED = 800.0
+var shaky_cam = null
 
 export (int) var HP = 3
 
@@ -217,6 +218,8 @@ func set_drilling(new_drilling):
 		$Drill.get_node("CPUParticles2D").texture = closest_block.get_texture()
 		if !falling:
 			$Drill.get_node("CPUParticles2D").emitting = drilling
+			if shaky_cam && drilling:
+				shaky_cam.shake()
 		else:
 			$Drill.get_node("CPUParticles2D").emitting = false
 
