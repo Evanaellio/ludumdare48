@@ -12,6 +12,7 @@ var current_level : Node2D
 var next_level : Node2D
 var breaking_block_position
 var is_first_level = true
+var level_count = 0
 
 var collapse_time = 10 # initial timer, should decrease when difficulty increases
 
@@ -67,11 +68,13 @@ func instanciate_random_level(position):
 	return random_level
 
 func goto_next_level():
+	level_count += 1
 	emit_signal("goto_next_floor", breaking_block_pos)
 	$CollapseTimer.start(collapse_time)
 	if is_first_level:
 		is_first_level = false
 	else:
+		$Player/PlayerBody.add_score(10 * (level_count / 5 + 1))
 		playWaterTransition()
 	breaking_block_pos = Vector2.ZERO
 	current_level = next_level

@@ -23,4 +23,4 @@ func _on_HitArea_body_entered(body: Node):
 	if visible and body.is_in_group("killable-mobs"):
 		print("drilling " + name)
 		body.queue_free()
-		get_parent().add_score(100)
+		get_parent().add_score(30)
