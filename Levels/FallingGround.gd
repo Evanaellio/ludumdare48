@@ -32,6 +32,8 @@ var mobs = {
 }
 
 func _ready():
+	randomize()
+
 	load_floors()
 	next_level = instanciate_random_level(transform.origin)
 	goto_next_level()
