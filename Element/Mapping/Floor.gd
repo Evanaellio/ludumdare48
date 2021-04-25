@@ -25,7 +25,6 @@ func configure_block(tile_pos, tile):
 	
 	var tile_above = $TileMap.get_cellv(tile_pos + Vector2.UP)
 	new_block.Grassy = (tile_above == Tiles.EMPTY and not tile_pos.y == 0)
-	print(tile_above, new_block.Grassy)
 	new_block.Hidden_Coin = (tile == Tiles.COIN)
 	new_block.Spiky = (tile == Tiles.SPIKE)
 	
