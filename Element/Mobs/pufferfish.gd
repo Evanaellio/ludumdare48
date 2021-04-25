@@ -13,7 +13,6 @@ func _ready():
 
 
 func _on_BumperDetect_body_entered(body):
-	print("pufferfish bumper: body entered" + self.get_path_to(body))
 	var p = self.get_path_to(body)
 	var name = p.get_name(p.get_name_count() - 1)
 	

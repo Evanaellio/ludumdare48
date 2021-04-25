@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Sprite/Moving/Shark.png" type="Texture" id=1]
 [ext_resource path="res://Element/Mobs/shark.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sprite/Static/Courant.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 30, 14 )
@@ -12,7 +13,6 @@ extents = Vector2( 64, 16 )
 [sub_resource type="Animation" id=3]
 resource_name = "idle-loop"
 length = 8.0
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -20,10 +20,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2, 4, 6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 2, 4, 6, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 22, -0.333 ), Vector2( -2, 3 ), Vector2( -23, 1.5 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 22, -0.333 ), Vector2( -2, 3 ), Vector2( -23, 1.5 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rotation_degrees")
@@ -32,10 +32,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1.5, 2.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.5, 2.5, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 10.0, -10.0 ]
+"values": [ 0.0, 10.0, -10.0, 0.0 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:scale")
@@ -53,9 +53,6 @@ tracks/2/keys = {
 [node name="Shark" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 16.0172, 0.497855 )
-rotation = -0.174031
-scale = Vector2( -0.249282, 1 )
 texture = ExtResource( 1 )
 flip_h = true
 script = ExtResource( 2 )
@@ -73,6 +70,16 @@ shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 anims/idle-loop = SubResource( 3 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Sprite"]
+texture = ExtResource( 3 )
+direction = Vector2( -1, 0 )
+gravity = Vector2( 0, -10 )
+initial_velocity = 40.0
+angle = 180.0
+scale_amount = 0.4
+hue_variation = 0.05
+hue_variation_random = 0.5
 [connection signal="body_entered" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_entered"]
 [connection signal="body_exited" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_exited"]
 [connection signal="body_entered" from="Sprite/PlayerDetect" to="Sprite" method="_on_PlayerDetect_body_entered"]
