@@ -365,7 +365,15 @@ Sprite_Type = "Wood"
 [node name="Coin2" parent="." instance=ExtResource( 9 )]
 position = Vector2( 616, 64 )
 
+[node name="Spike3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 496, 248 )
+Sprite_Type = "Dark"
+
 [node name="Coin" parent="." instance=ExtResource( 9 )]
 position = Vector2( 320, 224 )
+
+[node name="Spike2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 272, 248 )
+Sprite_Type = "Wood"
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_Button_pressed"]
