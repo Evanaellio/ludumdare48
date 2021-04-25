@@ -33,7 +33,14 @@ func _on_Floor_goto_next_floor(starting_pos_signal : Vector2):
 		blocks.sort_custom(self, "distance_to_starting_pos")
 		
 		for block in blocks:
-			block.self_destruct_after(block_distance[block] / 400)
+			var diff = block.global_position - starting_pos
+			var angle = 0
+			if diff.x < 0:
+				angle = 45
+			elif diff.x > 0:
+				angle = -45
+			
+			block.self_destruct_after(block_distance[block] / 450, angle)
 		
 		
 	elif signal_counter == 2: # Delete on third signal call (to avoid removing in player sight)

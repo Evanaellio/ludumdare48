@@ -4,6 +4,8 @@ export (int) var DAMAGE = 0 setget set_damage
 
 export (bool) var Grassy = true
 
+const MAX_DAMAGE = 3
+
 func _ready():
 	update_grass(Grassy)
 
@@ -25,7 +27,7 @@ func set_damage(dmg):
 	$StaticBody2D/DamageSprite.frame = DAMAGE
 
 func do_damage():
-	if DAMAGE == 3:
+	if DAMAGE == MAX_DAMAGE:
 		destroy()
 	set_damage(DAMAGE + 1)
 
@@ -34,11 +36,12 @@ func destroy(): # Yes, but actually no
 	$StaticBody2D/DamageSprite.visible = false
 	$StaticBody2D/CollisionShape2D.disabled = true
 
-func self_destruct_after(time):
-	yield(get_tree().create_timer(time), "timeout")
-	do_damage()
-	
-	for i in range(3):
-		yield(get_tree().create_timer(0.06), "timeout")
-		do_damage()
-	
+func self_destruct_after(delay, angle):
+	$Tween.interpolate_method(self, "set_damage", DAMAGE, MAX_DAMAGE, 1, Tween.TRANS_QUAD, Tween.EASE_IN, delay)
+	$Tween.interpolate_property(self, "scale", scale, Vector2.ZERO, 0.3, Tween.TRANS_QUAD, Tween.EASE_IN, delay + 1.10)
+	$Tween.interpolate_property(self, "rotation_degrees", rotation_degrees, angle, 0.4, Tween.TRANS_QUAD, Tween.EASE_IN, delay + 1)
+	$Tween.interpolate_property(self, "position", position, position + 64 * Vector2.DOWN, 0.4, Tween.TRANS_QUAD, Tween.EASE_IN, delay + 1)
+	$Tween.start()
+
+func _on_Tween_tween_all_completed():
+	destroy()
