@@ -23,6 +23,8 @@ export (int) var HP = 6
 export (int) var SCORE = 0
 export (int) var COINS = 0
 export (int) var COIN_VALUE = 5
+export var INVULNERABILITY_TIME = 1
+export (int) var FLASHING_INTERVAL = 8
 
 # export (int) var max_speed = 200
 # export (int) var acceleration = 1000
@@ -34,7 +36,7 @@ var MAX_FLOOR_AIRBORNE_TIME = 0.15
 
 var airborne_time = 1e20
 
-var floor_h_velocity = 0.0
+#var floor_h_velocity = 0.0
 var falling = false
 var last_falling_speed = 0.0
 
@@ -42,6 +44,9 @@ var velocity = Vector2.ZERO
 var player_acceleration = Vector2.ZERO
 
 var drilling = false
+var hit_timer = 0
+var flash_counter = 0
+var invulnerability_flash_transparent = false
 var closest_block: Node2D = null
 
 var SPRITES_NODE = []
@@ -77,8 +82,8 @@ func _integrate_forces(var s):
 		jump = true
 
 	# Deapply prev floor velocity
-	lv.x -= floor_h_velocity
-	floor_h_velocity = 0.0
+	#lv.x -= floor_h_velocity
+	#floor_h_velocity = 0.0
 
 	# Find the floor (a contact with upwards facing collision normal)
 	var found_floor = false
@@ -149,12 +154,6 @@ func _integrate_forces(var s):
 			new_siding_left = true
 		elif lv.x > 0 and move_right:
 			new_siding_left = false
-		if jumping:
-			new_anim = "jumping"
-		elif abs(lv.x) < 0.1:
-			new_anim = "idle"
-		else:
-			new_anim = "run"
 
 		falling = false
 	else:
@@ -172,10 +171,7 @@ func _integrate_forces(var s):
 				xv = 0
 			lv.x = sign(lv.x) * xv
 
-		if lv.y < 0:
-			new_anim = "jumping"
-		else:
-			new_anim = "falling"
+		if lv.y >= 0:
 			last_falling_speed = lv.y
 			falling = true
 			#if last_falling_speed > TERMINAL_SPEED - 100 and not $sound_fall.playing:
@@ -190,15 +186,16 @@ func _integrate_forces(var s):
 		get_node("Sprite_head/Light2D").scale.x *= -1
 		siding_left = new_siding_left
 
-	# Change animation
-	if new_anim != anim:
-		anim = new_anim
-		#$anim.play(anim)
-
-	# Apply floor velocity
-	if found_floor:
-		floor_h_velocity = s.get_contact_collider_velocity_at_position(floor_index).x
-		lv.x += floor_h_velocity
+	# Check invulnerability
+	if hit_timer <= INVULNERABILITY_TIME:
+		if flash_counter % FLASHING_INTERVAL == 0:
+			invulnerability_flash()
+		hit_timer += step
+		flash_counter += 1
+	else:
+		if invulnerability_flash_transparent:
+			invulnerability_flash()
+		flash_counter = 0
 
 	# Finally, apply gravity and set back the linear velocity
 	lv += s.get_total_gravity() * step
@@ -210,9 +207,26 @@ func knockback(vector: Vector2, from_global_pos: Vector2):
 	apply_impulse(Vector2(0,0), dir * vector.length() * TERMINAL_SPEED + up_force * 0.5)
 
 func hurt():
-	HP = HP - 1
-	print("HP=" + str(HP))
-	emit_signal("hp_changed", HP)
+	if hit_timer > INVULNERABILITY_TIME:
+		hit_timer = 0
+		HP = HP - 1
+		print("HP=" + str(HP))
+		emit_signal("hp_changed", HP)
+
+func invulnerability_flash():
+	if invulnerability_flash_transparent:
+		for node in SPRITES_NODE:
+			node.modulate.a = 1
+			if node.modulate.g != 1:
+				node.modulate.g = 1
+				node.modulate.b = 1
+	else:
+		for node in SPRITES_NODE:
+			node.modulate.a = 0.5
+			if flash_counter < FLASHING_INTERVAL:
+				node.modulate.g = 0.5
+				node.modulate.b = 0.5
+	invulnerability_flash_transparent = !invulnerability_flash_transparent
 
 func set_drilling(new_drilling):
 	if !drilling && new_drilling:
