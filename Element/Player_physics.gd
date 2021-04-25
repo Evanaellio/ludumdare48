@@ -203,8 +203,10 @@ func _integrate_forces(var s):
 	lv += s.get_total_gravity() * step
 	s.set_linear_velocity(lv)
 
-func knockback(vector):
-	apply_impulse(Vector2(0,0), vector * TERMINAL_SPEED)
+func knockback(vector: Vector2, from_global_pos: Vector2):
+	var dir = (global_position - from_global_pos).normalized()
+	var up_force = vector.normalized() * Vector2(0, 1)
+	apply_impulse(Vector2(0,0), dir * vector.length() * TERMINAL_SPEED + up_force * 0.5)
 
 func hurt():
 	HP = HP - 1

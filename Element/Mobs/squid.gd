@@ -17,7 +17,7 @@ func _on_BumperDetect_body_entered(body):
 		print("squid bumper: player bumped")
 		var player = get_node(p)
 		player.hurt()
-		player.knockback(Vector2(0, -25))
+		player.knockback(Vector2(0, -25), global_position)
 		get_node("CPUParticles2D").emitting = true
 
 

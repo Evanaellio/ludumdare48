@@ -20,7 +20,7 @@ func _on_BumperDetect_body_entered(body):
 		print("seastar bumper: player bumped")
 		var player = get_node(p)
 		player.hurt()
-		player.knockback(Vector2(0, -25))
+		player.knockback(Vector2(0, -25), global_position)
 
 
 func _on_BumperDetect_body_exited(body):
