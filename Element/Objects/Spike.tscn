@@ -8,15 +8,16 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+hframes = 3
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PoolVector2Array( 16, 32, 6, -16, 0, -16, -6, -16, -16, 32 )
+polygon = PoolVector2Array( 16, 32, 2.43602, -16.0365, 0, -16, -1.87161, -15.9428, -16, 32 )
 
 [node name="DamageArea" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DamageArea"]
-polygon = PoolVector2Array( -6, -16, 6, -16, 0, -26 )
+polygon = PoolVector2Array( -1.87161, -16, 2.43602, -16, 0, -26 )
 
 [connection signal="body_entered" from="DamageArea" to="." method="_on_DamageArea_body_entered"]
