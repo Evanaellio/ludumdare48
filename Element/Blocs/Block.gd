@@ -9,6 +9,7 @@ export (bool) var Spiky = false
 export (int) var CoinsCount = 5
 
 var spike = preload("res://Element/Objects/Spike.tscn")
+var spike_instance = null
 
 var can_collapse_floor = false # Blocks at the bottom of the floor
 var is_wall = false # Blocks at the side
@@ -25,10 +26,10 @@ func _ready():
 	if Hidden_Coin:
 		update_coin(Hidden_Coin)
 	if Spiky:
-		var new_spike = spike.instance()
-		new_spike.position += Vector2.UP * 48
-		new_spike.Sprite_Type = Sprite_Type
-		add_child(new_spike)
+		spike_instance = spike.instance()
+		spike_instance.position += Vector2.UP * 48
+		spike_instance.Sprite_Type = Sprite_Type
+		add_child(spike_instance)
 
 func update_sprite(var bsprite):
 	get_sprite_node().set_visible(false)
@@ -74,6 +75,8 @@ func destroy(by_drill): # Yes, but actually no
 			emit_signal("drilled_coin", CoinsCount)
 	$StaticBody2D/DamageSprite.visible = false
 	$StaticBody2D/CollisionShape2D.disabled = true
+	if spike_instance:
+		spike_instance.get_node("DamageArea/CollisionPolygon2D").disabled = true
 
 func self_destruct_after(delay, angle):
 	var transition = Tween.TRANS_CUBIC
