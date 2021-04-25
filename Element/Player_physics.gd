@@ -19,7 +19,7 @@ export (int) var STOP_JUMP_FORCE = 900.0
 export (int) var TERMINAL_SPEED = 800.0
 var shaky_cam = null
 
-export (int) var HP = 3
+export (int) var HP = 6
 export (int) var SCORE = 0
 export (int) var COINS = 0
 export (int) var COIN_VALUE = 5
