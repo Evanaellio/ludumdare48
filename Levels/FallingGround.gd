@@ -7,11 +7,19 @@ var floors = []
 var current_level : Node2D
 var next_level : Node2D
 var breaking_block_position
+var is_first_level = true
 
 func _ready():
 	load_floors()
 	next_level = instanciate_random_level(transform.origin)
 	goto_next_level()
+	
+	# reset water position
+	$WaterLayer/WaterCurrent.rotation_degrees = 0
+	$WaterLayer/WaterCurrent.position.y = 48
+	$WaterLayer/WaterNext.position.y = 400
+	$WaterLayer/WaterCurrent.scale.y = 4.5
+	$WaterLayer/WaterNext.scale.y = 1.5
 
 func load_floors():
 	var dir = Directory.new()
@@ -34,6 +42,11 @@ func instanciate_random_level(position):
 	return random_level
 
 func goto_next_level():
+	if is_first_level:
+		is_first_level = false
+	else:
+		playWaterTransition()
+	
 	emit_signal("goto_next_floor", breaking_block_pos)
 	breaking_block_pos = Vector2.ZERO
 	current_level = next_level
@@ -44,3 +57,15 @@ func goto_next_level():
 
 func _on_PlayerBody_dig_block(position):
 	breaking_block_pos = position
+	
+func playWaterTransition():
+	$WaterLayer/AnimationPlayer.stop(true)
+	$WaterLayer/AnimationPlayer.play("Water")
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	$WaterLayer.position.y += 7 * 32
+	$WaterLayer/WaterCurrent.position.y = 48
+	$WaterLayer/WaterNext.position.y = 400
+	$WaterLayer/WaterCurrent.scale.y = 4.5
+	$WaterLayer/WaterNext.scale.y = 1.5
