@@ -221,13 +221,13 @@ func set_drilling(new_drilling):
 	drilling = new_drilling
 	$Drill.visible = drilling
 	if closest_block:
-		$Drill.get_node("CPUParticles2D").texture = closest_block.get_texture()
+		$Drill.get_node("CPUParticles2D_Block").texture = closest_block.get_texture()
 		if !falling:
-			$Drill.get_node("CPUParticles2D").emitting = drilling
+			$Drill.get_node("CPUParticles2D_Block").emitting = drilling
 			if shaky_cam && drilling:
 				shaky_cam.shake()
 		else:
-			$Drill.get_node("CPUParticles2D").emitting = false
+			$Drill.get_node("CPUParticles2D_Block").emitting = false
 
 func _on_DrillingTimer_timeout():
 	if drilling && closest_block:
