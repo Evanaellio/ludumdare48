@@ -5,7 +5,6 @@ const autoload_order: = [
 	'SettingsAudio',
 	'SettingsControls',
 	'SettingsLanguage',
-	'SettingsResolution',
 	'SettingsSaveLoad',
 	'Settings',
 	'Options',
