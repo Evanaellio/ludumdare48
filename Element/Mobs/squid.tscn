@@ -4,20 +4,23 @@
 [ext_resource path="res://Element/Mobs/squid.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Sprite/Static/Ink.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 5 )
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 8.0
+height = 8.0
 
 [sub_resource type="CapsuleShape2D" id=2]
 height = 9.7337
 
-[node name="Squid" type="RigidBody2D"]
+[node name="Squid" type="RigidBody2D" groups=[
+"killable-mobs",
+]]
+mode = 2
+gravity_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 11 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="CollisionShape2D"]
-position = Vector2( 0, -11 )
 texture = ExtResource( 1 )
 hframes = 4
 script = ExtResource( 2 )
@@ -41,6 +44,7 @@ spread = 90.0
 gravity = Vector2( 0, 10 )
 initial_velocity = 10.0
 angle = -90.0
+
 [connection signal="body_entered" from="CollisionShape2D/Sprite/BumperDetect" to="CollisionShape2D/Sprite" method="_on_BumperDetect_body_entered"]
 [connection signal="body_exited" from="CollisionShape2D/Sprite/BumperDetect" to="CollisionShape2D/Sprite" method="_on_BumperDetect_body_exited"]
 [connection signal="animation_finished" from="CollisionShape2D/Sprite/AnimationPlayer" to="CollisionShape2D/Sprite" method="_on_AnimationPlayer_animation_finished"]

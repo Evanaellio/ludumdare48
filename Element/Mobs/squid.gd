@@ -18,6 +18,13 @@ func _on_BumperDetect_body_entered(body):
 		var player = get_node(p)
 		player.hurt()
 		player.knockback(Vector2(0, -25), global_position)
+
+		var squid = get_parent().get_parent()
+		var vec = (squid.global_position - player.global_position).normalized()
+		squid.apply_impulse(Vector2.ZERO, vec * 25)
+		squid.look_at(squid.global_position + vec * 25)
+		squid.rotation_degrees += 90
+
 		get_node("CPUParticles2D").emitting = true
 
 
