@@ -267,10 +267,6 @@ script = ExtResource( 2 )
 [node name="CollapseTimer" type="Timer" parent="."]
 wait_time = 10.0
 
-[node name="WaterfallTimer" type="Timer" parent="."]
-wait_time = 1.05
-one_shot = true
-
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192.19, 110.23 )
 
@@ -298,7 +294,6 @@ texture = ExtResource( 4 )
 anims/Water = SubResource( 8 )
 
 [connection signal="timeout" from="CollapseTimer" to="." method="goto_next_level"]
-[connection signal="timeout" from="WaterfallTimer" to="." method="_on_WaterfallTimer_timeout"]
 [connection signal="dig_block" from="Player/PlayerBody" to="." method="_on_PlayerBody_dig_block"]
 [connection signal="animation_finished" from="WaterLayer/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 
