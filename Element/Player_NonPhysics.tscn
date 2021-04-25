@@ -9,7 +9,7 @@
 [ext_resource path="res://Element/Player_NonPhysics.gd" type="Script" id=7]
 [ext_resource path="res://Assets/Sprite/Light/Player_Light.png" type="Texture" id=8]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=1]
 resource_name = "check_light"
 length = 5.0
 tracks/0/type = "value"
@@ -61,8 +61,7 @@ tracks/3/keys = {
 "values": [ Color( 0.952941, 0.941176, 0.262745, 1 ), Color( 0.862745, 0.662745, 0.0588235, 1 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "check_reel"
+[sub_resource type="Animation" id=2]
 length = 6.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -149,7 +148,7 @@ tracks/6/keys = {
 "values": [ 0.0, 0.0, 100.0, 95.0, 84.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 resource_name = "shut_light"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/HandL:position")
@@ -188,8 +187,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle-loop"
+[sub_resource type="Animation" id=4]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -204,8 +202,7 @@ tracks/0/keys = {
 "values": [ Vector2( 10, 0 ), Vector2( 10, -2 ), Vector2( 10, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "idle_left_right"
+[sub_resource type="Animation" id=5]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
@@ -232,7 +229,7 @@ tracks/1/keys = {
 "values": [ Vector2( 10, 0 ), Vector2( 10, -1 ), Vector2( 10, 1 ), Vector2( 10, 0 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 11.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -304,9 +301,10 @@ light_mask = 3
 texture = ExtResource( 3 )
 
 [node name="Light2D" type="Light2D" parent="Node2D/Body/Head"]
+enabled = false
 texture = ExtResource( 8 )
 offset = Vector2( -24, 3 )
-color = Color( 0.862745, 0.662745, 0.0588235, 1 )
+color = Color( 0.952941, 0.941176, 0.262745, 1 )
 
 [node name="FootR" type="Sprite" parent="Node2D/Body"]
 light_mask = 3
@@ -318,16 +316,14 @@ texture = ExtResource( 5 )
 
 [node name="HandL" type="Sprite" parent="Node2D/Body"]
 light_mask = 3
-position = Vector2( 0.866667, -4.76667 )
-rotation = 2.70526
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D"]
-anims/check_light = SubResource( 4 )
-anims/check_reel = SubResource( 1 )
-anims/enable_light = SubResource( 6 )
-anims/idle-loop = SubResource( 2 )
-anims/idle_left_right = SubResource( 3 )
-anims/shut_light = SubResource( 6 )
-anims/walk_to_boat_front = SubResource( 5 )
+anims/check_light = SubResource( 1 )
+anims/check_reel = SubResource( 2 )
+anims/enable_light = SubResource( 3 )
+anims/idle-loop = SubResource( 4 )
+anims/idle_left_right = SubResource( 5 )
+anims/shut_light = SubResource( 3 )
+anims/walk_to_boat_front = SubResource( 6 )
 [connection signal="animation_finished" from="Node2D/AnimationPlayer" to="Node2D" method="_on_AnimationPlayer_animation_finished"]

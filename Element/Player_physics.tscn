@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Assets/Sprite/Player/Scaphandrier_lefthand.png" type="Texture" id=1]
 [ext_resource path="res://Element/Player_physics.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Assets/Sprite/Player/Scaphandrier_rightfoot.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Sprite/Player/Scaphandrier_leftfoot.png" type="Texture" id=7]
 [ext_resource path="res://Element/Items/Drill.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Sprite/Light/Player_Light.png" type="Texture" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.97918
@@ -83,6 +84,11 @@ texture = ExtResource( 3 )
 [node name="Sprite_head" type="Sprite" parent="PlayerBody"]
 texture = ExtResource( 5 )
 
+[node name="Light2D" type="Light2D" parent="PlayerBody/Sprite_head"]
+texture = ExtResource( 9 )
+offset = Vector2( -24, 3 )
+color = Color( 0.784314, 0.611765, 0.0901961, 1 )
+
 [node name="Drill" parent="PlayerBody" instance=ExtResource( 8 )]
 position = Vector2( 0, 18.5616 )
 z_index = 1
@@ -136,5 +142,4 @@ position = Vector2( -1, 7 )
 node_a = NodePath("../../PlayerBody")
 node_b = NodePath("../../RightFoot")
 softness = 1.0
-
 [connection signal="timeout" from="PlayerBody/DrillingTimer" to="PlayerBody" method="_on_DrillingTimer_timeout"]

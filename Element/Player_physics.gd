@@ -187,6 +187,7 @@ func _integrate_forces(var s):
 	if new_siding_left != siding_left:
 		for node in SPRITES_NODE:
 			node.flip_h = !new_siding_left
+		get_node("Sprite_head/Light2D").scale.x *= -1
 		siding_left = new_siding_left
 
 	# Change animation
