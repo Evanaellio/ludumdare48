@@ -19,17 +19,18 @@ var collapse_time = 10 # initial timer, should decrease when difficulty increase
 var themes = ["Basic", "Wood"]
 
 var mobs = {
-	"basic": {
+	"Basic": {
 		"seastar": 50,
 		"pufferfish": 40,
-		"shark": 10,
 	},
-	"pirate": {
-		
+	"Wood": {
+		"ghost": 45,
+		"shark": 40,
+		"seastar": 10,
+		"pufferfish": 5,
 	},
-	
-	"dark": {
-		
+	"Dark": {
+		"anglerfish": 10
 	}
 }
 
@@ -67,8 +68,9 @@ func instanciate_random_level(position):
 	var choice = floors[randi() % floors.size()]
 	var random_level =  choice.instance()
 	random_level.global_position = position
-	random_level.get_node('FloorBase').theme = themes[int(level_count / 5) % themes.size()]
-	populate_level(random_level)
+	var theme = themes[int(level_count / 5) % themes.size()]
+	random_level.get_node('FloorBase').theme = theme
+	populate_level(random_level, theme)
 	add_child(random_level)
 	return random_level
 
@@ -111,9 +113,9 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	$WaterLayer/WaterNext.scale.y = 1.5
 
 func _on_Player_hp_changed(hp: int):
-	$CanvasLayer/HP/Heart1.frame = 0 if hp > 0 else 1
-	$CanvasLayer/HP/Heart2.frame = 0 if hp > 1 else 1
-	$CanvasLayer/HP/Heart3.frame = 0 if hp > 2 else 1
+	$CanvasLayer/HP/Heart1.frame = 0 if hp > 1 else (1 if hp > 0 else 2)
+	$CanvasLayer/HP/Heart2.frame = 0 if hp > 3 else (1 if hp > 2 else 2)
+	$CanvasLayer/HP/Heart3.frame = 0 if hp > 5 else (1 if hp > 4 else 2)
 	
 	if hp < 1:
 		Game.emit_signal("ChangeScene", RIP_Screen)
@@ -135,15 +137,14 @@ func random_weighted(weighted: Dictionary):
 			return key
 		target -= val
 
-func populate_level(level):
-	var biome = "basic"
-	var enemy_min = 3
-	var enemy_max = 5
+func populate_level(level, theme):
+	var enemy_min = 1 + (level_count / 4) * 1
+	var enemy_max = 3 + (level_count / 4) * 2
 	
 	var nb = rand_range(enemy_min, enemy_max + 1) as int
 	
 	for i in range(0, nb):
-		var types = mobs[biome]
+		var types = mobs[theme]
 		
 		var type = random_weighted(types)
 		

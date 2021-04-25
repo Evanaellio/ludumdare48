@@ -23,7 +23,7 @@ func _on_DamageArea_body_entered(body):
 		print("spike bumper: player bumped")
 		var player = get_node(p)
 		player.hurt()
-		player.knockback(Vector2(0, -25))
+		player.knockback(Vector2(0, -25), global_position)
 
 	elif body.is_in_group("killable-mobs"):
 		print("spiking " + name)

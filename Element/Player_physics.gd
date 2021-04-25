@@ -19,7 +19,7 @@ export (int) var STOP_JUMP_FORCE = 900.0
 export (int) var TERMINAL_SPEED = 800.0
 var shaky_cam = null
 
-export (int) var HP = 3
+export (int) var HP = 6
 export (int) var SCORE = 0
 export (int) var COINS = 0
 export (int) var COIN_VALUE = 5
@@ -203,8 +203,10 @@ func _integrate_forces(var s):
 	lv += s.get_total_gravity() * step
 	s.set_linear_velocity(lv)
 
-func knockback(vector):
-	apply_impulse(Vector2(0,0), vector * TERMINAL_SPEED)
+func knockback(vector: Vector2, from_global_pos: Vector2):
+	var dir = (global_position - from_global_pos).normalized()
+	var up_force = vector.normalized() * Vector2(0, 1)
+	apply_impulse(Vector2(0,0), dir * vector.length() * TERMINAL_SPEED + up_force * 0.5)
 
 func hurt():
 	HP = HP - 1
@@ -219,13 +221,13 @@ func set_drilling(new_drilling):
 	drilling = new_drilling
 	$Drill.visible = drilling
 	if closest_block:
-		$Drill.get_node("CPUParticles2D").texture = closest_block.get_texture()
+		$Drill.get_node("CPUParticles2D_Block").texture = closest_block.get_texture()
 		if !falling:
-			$Drill.get_node("CPUParticles2D").emitting = drilling
+			$Drill.get_node("CPUParticles2D_Block").emitting = drilling
 			if shaky_cam && drilling:
 				shaky_cam.shake()
 		else:
-			$Drill.get_node("CPUParticles2D").emitting = false
+			$Drill.get_node("CPUParticles2D_Block").emitting = false
 
 func _on_DrillingTimer_timeout():
 	if drilling && closest_block:
