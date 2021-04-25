@@ -2,6 +2,8 @@ extends Node2D
 
 signal goto_next_floor(breaking_block)
 
+export (PackedScene) var RIP_Screen: PackedScene
+
 var breaking_block_pos = Vector2.ZERO
 var floors = []
 var current_level : Node2D
@@ -22,6 +24,8 @@ func _ready():
 	$WaterLayer/WaterNext.position.y = 400
 	$WaterLayer/WaterCurrent.scale.y = 4.5
 	$WaterLayer/WaterNext.scale.y = 1.5
+	
+	$Player/PlayerBody.connect("hp_changed", self, "_on_Player_hp_changed")
 
 func load_floors():
 	var dir = Directory.new()
@@ -78,3 +82,11 @@ func _on_WaterfallTimer_timeout():
 		is_first_level = false
 	else:
 		playWaterTransition()
+
+func _on_Player_hp_changed(hp: int):
+	$CanvasLayer/HP/Heart1.frame = 0 if hp > 0 else 1
+	$CanvasLayer/HP/Heart2.frame = 0 if hp > 1 else 1
+	$CanvasLayer/HP/Heart3.frame = 0 if hp > 2 else 1
+	
+	if hp < 1:
+		Game.emit_signal("ChangeScene", RIP_Screen)

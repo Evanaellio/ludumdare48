@@ -11,4 +11,5 @@ func _on_DamageArea_body_entered(body):
 	
 	if name == "Player" or name.begins_with("Player"):
 		var player = get_node(p)
+		player.hurt()
 		player.knockback(Vector2(0, -25))
