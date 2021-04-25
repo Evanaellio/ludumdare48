@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Levels/FallingGround.gd" type="Script" id=1]
 [ext_resource path="res://Levels/ShakyCamera2D.gd" type="Script" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Assets/Sprite/Player/heart.png" type="Texture" id=5]
 [ext_resource path="res://MainMenu/GameOver.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GameTemplate/Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Assets/Sprite/Decor/Background_basic.png" type="Texture" id=8]
+
+[sub_resource type="ShaderMaterial" id=11]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 5 )
@@ -246,6 +249,20 @@ tracks/4/keys = {
 [node name="FallingGround" type="Node2D"]
 script = ExtResource( 1 )
 RIP_Screen = ExtResource( 6 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 1, 0.25 )
+motion_mirroring = Vector2( 768, 432 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color( 0.466667, 0.466667, 0.466667, 1 )
+material = SubResource( 11 )
+position = Vector2( 386.001, 219.296 )
+texture = ExtResource( 8 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 800, 600 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
