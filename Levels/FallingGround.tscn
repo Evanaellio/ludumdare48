@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Levels/FallingGround.gd" type="Script" id=1]
 [ext_resource path="res://Levels/ShakyCamera2D.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://icon.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Sprite/Player/heart.png" type="Texture" id=5]
 [ext_resource path="res://MainMenu/GameOver.tscn" type="PackedScene" id=6]
+[ext_resource path="res://addons/GameTemplate/Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=7]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 5 )
@@ -23,7 +24,13 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="DynamicFont" id=4]
+size = 24
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
+
+[sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
 
 // Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
@@ -92,13 +99,13 @@ void fragment(){
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
 shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
 shader_param/sprite_scale = Vector2( 10, 10 )
 shader_param/scale_x = 1.0
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id=7]
 code = "shader_type canvas_item;
 
 // Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
@@ -167,13 +174,13 @@ void fragment(){
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
 shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
 shader_param/sprite_scale = Vector2( 4, 4 )
 shader_param/scale_x = 2.0
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 2.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("WaterCurrent:rotation_degrees")
@@ -259,6 +266,18 @@ position = Vector2( 96, 18 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 3 )
 
+[node name="Score" type="Label" parent="CanvasLayer"]
+margin_left = 652.0
+margin_top = 8.0
+margin_right = 760.0
+margin_bottom = 27.0
+custom_fonts/font = SubResource( 4 )
+text = "Score: 000000"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ShakyCamera2D" type="Camera2D" parent="."]
 position = Vector2( 384, 216 )
 current = true
@@ -276,25 +295,25 @@ position = Vector2( 192.19, 110.23 )
 [node name="WaterLayer" type="Node2D" parent="."]
 
 [node name="WaterCurrent" type="Sprite" parent="WaterLayer"]
-material = SubResource( 5 )
+material = SubResource( 6 )
 position = Vector2( 384, 265.723 )
 scale = Vector2( 12, 4.68729 )
 texture = ExtResource( 4 )
 
 [node name="WaterNext" type="Sprite" parent="WaterLayer"]
-material = SubResource( 7 )
+material = SubResource( 8 )
 position = Vector2( 384, 500 )
 scale = Vector2( 12, 1e-05 )
 texture = ExtResource( 4 )
 
 [node name="WaterNextNext" type="Sprite" parent="WaterLayer"]
-material = SubResource( 7 )
+material = SubResource( 8 )
 position = Vector2( 384, 624 )
 scale = Vector2( 12, 1.5 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WaterLayer"]
-anims/Water = SubResource( 8 )
+anims/Water = SubResource( 9 )
 
 [connection signal="timeout" from="CollapseTimer" to="." method="goto_next_level"]
 [connection signal="dig_block" from="Player/PlayerBody" to="." method="_on_PlayerBody_dig_block"]

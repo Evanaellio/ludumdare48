@@ -7,6 +7,7 @@ var stopping_jump = false
 
 signal dig_block(block)
 signal hp_changed(hp)
+signal score_changed(score)
 
 export (int) var WALK_ACCEL = 800.0
 export (int) var WALK_DEACCEL = 800.0
@@ -19,6 +20,9 @@ export (int) var TERMINAL_SPEED = 800.0
 var shaky_cam = null
 
 export (int) var HP = 3
+export (int) var SCORE = 0
+export (int) var COINS = 0
+export (int) var COIN_VALUE = 5
 
 # export (int) var max_speed = 200
 # export (int) var acceleration = 1000
@@ -227,3 +231,11 @@ func _on_DrillingTimer_timeout():
 	if drilling && closest_block:
 		emit_signal("dig_block", closest_block)
 		closest_block.do_damage()
+
+func add_score(score):
+	SCORE += score
+	emit_signal("score_changed", SCORE)
+
+func add_coin(nb):
+	COINS += nb
+	add_score(nb * COIN_VALUE)

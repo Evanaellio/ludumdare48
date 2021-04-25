@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Element/Mapping/floor_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Element/Objects/Spike.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Element/Items/Coin.tscn" type="PackedScene" id=3]
 
 [node name="Floor" type="Node2D"]
 
@@ -9,5 +10,34 @@
 
 [node name="Spike" parent="." instance=ExtResource( 2 )]
 position = Vector2( 176, 160 )
+
+[node name="Coin" parent="." instance=ExtResource( 3 )]
+position = Vector2( 426, 148 )
+
+[node name="Coin2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 508, 146 )
+
+[node name="Coin3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 546, 100 )
+
+[node name="Coin4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 546, 100 )
+rotation = 2.99908
+
+[node name="Coin5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 540, 124 )
+rotation = 2.99908
+
+[node name="Coin6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 562, 128 )
+rotation = 2.99908
+
+[node name="Coin7" parent="." instance=ExtResource( 3 )]
+position = Vector2( 552, 154 )
+rotation = 2.99908
+
+[node name="Coin8" parent="." instance=ExtResource( 3 )]
+position = Vector2( 152, 140 )
+rotation = 2.99908
 
 [editable path="FloorBase"]

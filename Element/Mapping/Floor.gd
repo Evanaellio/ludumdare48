@@ -16,6 +16,8 @@ func _ready():
 			if ground_tile.x == 11:
 				# Default starting position for collapse : between 2 middle blocks
 				starting_pos = world_position + Vector2(16,16)
+		# Forward drilled signal to FallingGround
+		new_block.connect("drilled_coin", get_parent().get_parent(), "_on_block_coin_drilled")
 		$Blocks.add_child(new_block)
 
 var signal_counter = 0

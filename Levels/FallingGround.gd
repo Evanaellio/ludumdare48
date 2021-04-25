@@ -4,6 +4,8 @@ signal goto_next_floor(breaking_block)
 
 export (PackedScene) var RIP_Screen: PackedScene
 
+onready var coins = $CanvasLayer/Score
+
 var breaking_block_pos = Vector2.ZERO
 var floors = []
 var current_level : Node2D
@@ -41,6 +43,7 @@ func _ready():
 	$WaterLayer/WaterNext.scale.y = 1.5
 	
 	$Player/PlayerBody.connect("hp_changed", self, "_on_Player_hp_changed")
+	$Player/PlayerBody.connect("score_changed", self, "_on_Player_score_changed")
 
 func load_floors():
 	var dir = Directory.new()
@@ -106,6 +109,15 @@ func _on_Player_hp_changed(hp: int):
 	if hp < 1:
 		Game.emit_signal("ChangeScene", RIP_Screen)
 
+func _on_Player_score_changed(count: int):
+	coins.text = str(count)
+	if count < 100000: coins.text = "0" + coins.text
+	if count < 10000: coins.text = "0" + coins.text
+	if count < 1000: coins.text = "0" + coins.text
+	if count < 100: coins.text = "0" + coins.text
+	if count < 10: coins.text = "0" + coins.text
+	coins.text = "Score: " + coins.text
+
 func random_weighted(weighted: Dictionary):
 	var target = rand_range(0, 100) as int
 	for key in weighted.keys():
@@ -135,3 +147,6 @@ func populate_level(level):
 		mob.position.x = rand_range(32.0, 23*32.0)
 		
 		level.add_child(mob)
+
+func _on_block_coin_drilled(nb):
+	$Player/PlayerBody.add_coin(5)
