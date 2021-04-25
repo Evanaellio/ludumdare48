@@ -5,22 +5,35 @@ const block : PackedScene = preload("res://Element/Blocs/Block_Basic.tscn")
 var starting_pos : Vector2 # Starting position for collapse
 var block_distance = {}
 
+enum Tiles {EMPTY = -1, GROUND, COIN, SPIKE, WALL}
+
 func _ready():
-	for ground_tile in $TileMap.get_used_cells_by_id(0): # ID 0 : ground tile
-		$TileMap.set_cellv(ground_tile, -1) # Remove tile
-		var world_position = $TileMap.map_to_world(ground_tile) + Vector2(16,16) + global_position
-		var new_block = block.instance()
-		new_block.global_position = world_position
-		if ground_tile.y == 6: #Bottom line
-			new_block.can_collapse_floor = true
-			if ground_tile.x == 11:
-				# Default starting position for collapse : between 2 middle blocks
-				starting_pos = world_position + Vector2(16,16)
-		# Forward drilled signal to FallingGround
-		new_block.connect("drilled_coin", get_parent().get_parent(), "_on_block_coin_drilled")
-		$Blocks.add_child(new_block)
+	for tile_pos in $TileMap.get_used_cells(): # ID 0 : ground tile
+		configure_block(tile_pos, $TileMap.get_cellv(tile_pos))
+	$TileMap.queue_free()
 
 var signal_counter = 0
+
+func configure_block(tile_pos, tile):
+	var world_position = $TileMap.map_to_world(tile_pos) + Vector2(16,16) + global_position
+	var new_block = block.instance()
+	new_block.global_position = world_position
+	if tile_pos.y == 6: #Bottom line
+		new_block.can_collapse_floor = true
+		if tile_pos.x == 11:		
+			starting_pos = world_position + Vector2(16,16) # Default starting position for collapse : between the 2 middle blocks
+	
+	var tile_above = $TileMap.get_cellv(tile_pos + Vector2.UP)
+	new_block.Grassy = (tile_above == Tiles.EMPTY and not tile_pos.y == 0)
+	print(tile_above, new_block.Grassy)
+	new_block.Hidden_Coin = (tile == Tiles.COIN)
+	new_block.Spiky = (tile == Tiles.SPIKE)
+	
+	
+	# Forward drilled signal to FallingGround
+	new_block.connect("drilled_coin", get_parent().get_parent(), "_on_block_coin_drilled")
+	$Blocks.add_child(new_block)
+
 
 func distance_to_starting_pos(a, b):
 	return block_distance[a] < block_distance[b]

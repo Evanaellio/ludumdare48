@@ -5,7 +5,10 @@ export (int) var DAMAGE = 0 setget set_damage
 export (bool) var Grassy = true
 export(String, "Basic", "Wood") var Sprite_Type = "Basic"
 export (bool) var Hidden_Coin = false
-export (bool) var CoinsCount = 5
+export (bool) var Spiky = false
+export (int) var CoinsCount = 5
+
+var spike = preload("res://Element/Objects/Spike.tscn")
 
 var can_collapse_floor = false # Blocks at the bottom of the floor
 
@@ -20,6 +23,10 @@ func _ready():
 	update_grass(Grassy)
 	if Hidden_Coin:
 		update_coin(Hidden_Coin)
+	if Spiky:
+		var new_spike = spike.instance()
+		new_spike.position += Vector2.UP * 48
+		add_child(new_spike)
 
 func update_sprite(var bsprite):
 	get_sprite_node().set_visible(false)
