@@ -3,20 +3,34 @@ extends Node2D
 export (int) var DAMAGE = 0 setget set_damage
 
 export (bool) var Grassy = true
+export (String) var Sprite_Type = "Basic"
 
 const MAX_DAMAGE = 3
 
 func _ready():
+	if Sprite_Type != "Basic":
+		get_node("StaticBody2D/Basic/Block_grass").set_visible(false)
+		get_sprite_node().set_visible(true)
 	update_grass(Grassy)
 
+func update_sprite(var bsprite):
+	get_sprite_node().set_visible(false)
+	Sprite_Type = bsprite
+	get_sprite_node().set_visible(true)
+
 func update_grass(var grass):
-	if(grass):
-		$StaticBody2D/Block_grass.set_visible(true)
-		$StaticBody2D/Block.set_visible(false)
-	else:
-		$StaticBody2D/Block_grass.set_visible(false)
-		$StaticBody2D/Block.set_visible(true)
+	get_sprite_node().set_visible(false)
 	Grassy = grass
+	get_sprite_node().set_visible(true)
+
+func get_texture():
+	return get_sprite_node().texture
+
+func get_sprite_node():
+	if (Grassy):
+		return get_node("StaticBody2D/" + Sprite_Type + "/Block_grass")
+	else:
+		return get_node("StaticBody2D/" + Sprite_Type + "/Block")
 
 func set_damage(dmg):
 	DAMAGE = dmg
@@ -32,7 +46,7 @@ func do_damage():
 	set_damage(DAMAGE + 1)
 
 func destroy(): # Yes, but actually no
-	$StaticBody2D/Block_grass.visible = false
+	get_sprite_node().set_visible(false)
 	$StaticBody2D/DamageSprite.visible = false
 	$StaticBody2D/CollisionShape2D.disabled = true
 

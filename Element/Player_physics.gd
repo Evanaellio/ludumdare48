@@ -214,7 +214,7 @@ func set_drilling(new_drilling):
 	drilling = new_drilling
 	$Drill.visible = drilling
 	if closest_block:
-		$Drill.get_node("CPUParticles2D").texture = closest_block.get_node("StaticBody2D/Block_grass").texture
+		$Drill.get_node("CPUParticles2D").texture = closest_block.get_texture()
 		if !falling:
 			$Drill.get_node("CPUParticles2D").emitting = drilling
 		else:
