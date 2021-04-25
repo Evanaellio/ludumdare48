@@ -27,6 +27,7 @@ func _ready():
 	if Spiky:
 		var new_spike = spike.instance()
 		new_spike.position += Vector2.UP * 48
+		new_spike.Sprite_Type = Sprite_Type
 		add_child(new_spike)
 
 func update_sprite(var bsprite):
