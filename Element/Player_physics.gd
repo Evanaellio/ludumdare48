@@ -47,7 +47,7 @@ func _ready():
 		get_node("Sprite_body"),
 		get_node("Sprite_head")]
 
-	pass # Replace with function body.
+	set_drilling(false)
 
 func _input(event):
 	set_drilling(Input.is_action_pressed("Drill"))

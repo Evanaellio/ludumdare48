@@ -1,8 +1,223 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Levels/FallingGround.gd" type="Script" id=1]
 [ext_resource path="res://Levels/Camera2D.gd" type="Script" id=2]
 [ext_resource path="res://Element/Player_physics.tscn" type="PackedScene" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+// Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
+// If you use this shader, I would prefer if you gave credit to me and my channel
+
+uniform vec4 blue_tint : hint_color;
+
+uniform vec2 sprite_scale;
+uniform float scale_x = 1; //0.67;
+
+float rand(vec2 coord){
+	return fract(sin(dot(coord, vec2(12.9898, 78.233)))* 43758.5453123);
+}
+
+float noise(vec2 coord){
+	vec2 i = floor(coord);
+	vec2 f = fract(coord);
+
+	// 4 corners of a rectangle surrounding our point
+	float a = rand(i);
+	float b = rand(i + vec2(1.0, 0.0));
+	float c = rand(i + vec2(0.0, 1.0));
+	float d = rand(i + vec2(1.0, 1.0));
+
+	vec2 cubic = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
+}
+
+void fragment(){
+	
+	vec2 noisecoord1 = UV * sprite_scale * scale_x;
+	vec2 noisecoord2 = UV * sprite_scale * scale_x + 4.0;
+	
+	vec2 motion1 = vec2(TIME * 0.8, TIME * -0.4);
+	vec2 motion2 = vec2(TIME * 0.1, TIME * 0.5);
+	
+	
+	vec2 distort1 = vec2(noise(noisecoord1 + motion1), noise(noisecoord2 + motion1)) - vec2(0.5);
+	vec2 distort2 = vec2(noise(noisecoord1 + motion2), noise(noisecoord2 + motion2)) - vec2(0.5);
+	
+	vec2 distort_sum = (distort1 + distort2) / 300.0;
+	
+	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV + distort_sum, 0.0);
+	
+	color = mix(color, blue_tint, 0.3);
+	color.rgb = mix(vec3(0.5), color.rgb, 1.4);
+	
+	float near_top = (UV.y + distort_sum.y) / (0.2 / sprite_scale.y);
+	near_top = clamp(near_top, 0.0, 1.0);
+	near_top = 1.0 - near_top;
+	
+	color = mix(color, vec4(1.0), near_top);
+	
+	float edge_lower = 0.7;
+	float edge_upper = edge_lower + 0.3;
+	
+	if(near_top > edge_lower){
+		color.a = 0.0;
+		
+		if(near_top < edge_upper){
+			color.a = (edge_upper - near_top) / (edge_upper - edge_lower);
+		}
+	}
+	
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
+shader_param/sprite_scale = Vector2( 10, 10 )
+shader_param/scale_x = 1.0
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+// Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
+// If you use this shader, I would prefer if you gave credit to me and my channel
+
+uniform vec4 blue_tint : hint_color;
+
+uniform vec2 sprite_scale;
+uniform float scale_x = 1; //0.67;
+
+float rand(vec2 coord){
+	return fract(sin(dot(coord, vec2(12.9898, 78.233)))* 43758.5453123);
+}
+
+float noise(vec2 coord){
+	vec2 i = floor(coord);
+	vec2 f = fract(coord);
+
+	// 4 corners of a rectangle surrounding our point
+	float a = rand(i);
+	float b = rand(i + vec2(1.0, 0.0));
+	float c = rand(i + vec2(0.0, 1.0));
+	float d = rand(i + vec2(1.0, 1.0));
+
+	vec2 cubic = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
+}
+
+void fragment(){
+	
+	vec2 noisecoord1 = UV * sprite_scale * scale_x;
+	vec2 noisecoord2 = UV * sprite_scale * scale_x + 4.0;
+	
+	vec2 motion1 = vec2(TIME * 0.8, TIME * -0.4);
+	vec2 motion2 = vec2(TIME * 0.1, TIME * 0.5);
+	
+	
+	vec2 distort1 = vec2(noise(noisecoord1 + motion1), noise(noisecoord2 + motion1)) - vec2(0.5);
+	vec2 distort2 = vec2(noise(noisecoord1 + motion2), noise(noisecoord2 + motion2)) - vec2(0.5);
+	
+	vec2 distort_sum = (distort1 + distort2) / 10.0;
+	
+	vec4 color = textureLod(SCREEN_TEXTURE, SCREEN_UV + distort_sum, 0.0);
+	
+	color = mix(color, blue_tint, 0.3);
+	color.rgb = mix(vec3(0.5), color.rgb, 1.4);
+	
+	float near_top = (UV.y + distort_sum.y) / (0.2 / sprite_scale.y);
+	near_top = clamp(near_top, 0.0, 1.0);
+	near_top = 1.0 - near_top;
+	
+	color = mix(color, vec4(1.0), near_top);
+	
+	float edge_lower = 0.7;
+	float edge_upper = edge_lower + 0.3;
+	
+	if(near_top > edge_lower){
+		color.a = 0.0;
+		
+		if(near_top < edge_upper){
+			color.a = (edge_upper - near_top) / (edge_upper - edge_lower);
+		}
+	}
+	
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
+shader_param/sprite_scale = Vector2( 5, 2 )
+shader_param/scale_x = 2.0
+
+[sub_resource type="Animation" id=5]
+resource_name = "Water"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("WaterCurrent:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.38, 0.471532, 1.20449, 1.26526 ),
+"transitions": PoolRealArray( 1e-05, 1e-05, 0.000261663, 1e-05 ),
+"update": 0,
+"values": [ 0.0, 180.0, 180.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("WaterCurrent:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.47807, 0.640803, 2.42978 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 384, 48 ), Vector2( 384, -80 ), Vector2( 384, 272 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("WaterNext:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.351958, 0.480789, 1.18681, 1.48994, 2.05628, 2.17073 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 384, 400 ), Vector2( 384, 320 ), Vector2( 384, 400 ), Vector2( 384, 422 ), Vector2( 384, 616 ), Vector2( 384, 500 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("WaterNext:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.351958, 0.480789, 1.18681, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 12, 1.5 ), Vector2( 12, 4 ), Vector2( 12, 1.5 ), Vector2( 12, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("WaterCurrent:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.483068, 0.64021, 2.42698 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 12, 4.5 ), Vector2( 12, 16 ), Vector2( 12, 4.5 ) ]
+}
 
 [node name="FallingGround" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,7 +234,31 @@ autostart = true
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192.19, 110.23 )
 
+[node name="WaterLayer" type="Node2D" parent="."]
+
+[node name="WaterCurrent" type="Sprite" parent="WaterLayer"]
+material = SubResource( 2 )
+position = Vector2( 384, 265.723 )
+scale = Vector2( 12, 4.68729 )
+texture = ExtResource( 4 )
+
+[node name="WaterNext" type="Sprite" parent="WaterLayer"]
+material = SubResource( 4 )
+position = Vector2( 384, 500 )
+scale = Vector2( 12, 1e-05 )
+texture = ExtResource( 4 )
+
+[node name="WaterNextNext" type="Sprite" parent="WaterLayer"]
+material = SubResource( 4 )
+position = Vector2( 384, 624 )
+scale = Vector2( 12, 1.5 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WaterLayer"]
+anims/Water = SubResource( 5 )
+
 [connection signal="timeout" from="Timer" to="." method="goto_next_level"]
 [connection signal="dig_block" from="Player/PlayerBody" to="." method="_on_PlayerBody_dig_block"]
+[connection signal="animation_finished" from="WaterLayer/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 
 [editable path="Player"]
