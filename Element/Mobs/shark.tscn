@@ -57,6 +57,7 @@ height = 23.8417
 [node name="Shark" type="RigidBody2D" groups=[
 "killable-mobs",
 ]]
+mode = 2
 gravity_scale = 0.0
 
 [node name="Sprite" type="Sprite" parent="."]

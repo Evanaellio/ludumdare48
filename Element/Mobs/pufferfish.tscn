@@ -4,7 +4,7 @@
 [ext_resource path="res://Element/Mobs/pufferfish.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 17.7763
+radius = 20.0897
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 128.0
@@ -70,7 +70,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=6]
-radius = 31.9858
+radius = 26.6301
 
 [node name="Pufferfish" type="RigidBody2D" groups=[
 "killable-mobs",
@@ -78,6 +78,7 @@ radius = 31.9858
 gravity_scale = 0.0
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
