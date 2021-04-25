@@ -6,6 +6,10 @@ export (bool) var Grassy = true
 export(String, "Basic", "Wood") var Sprite_Type = "Basic"
 export (bool) var Hidden_Coin = false
 
+export (bool) var CoinsCount = 5
+
+signal drilled_coin(coinsCount)
+
 const MAX_DAMAGE = 3
 
 func _ready():
@@ -49,14 +53,15 @@ func set_damage(dmg):
 
 func do_damage():
 	if DAMAGE == MAX_DAMAGE:
-		destroy()
+		destroy(true)
 	set_damage(DAMAGE + 1)
 
-func destroy(): # Yes, but actually no
+func destroy(by_drill): # Yes, but actually no
 	get_sprite_node().set_visible(false)
 	if Hidden_Coin:
 		$StaticBody2D/HiddenCoinSprite.visible = false
-		# TODO If destroyed by player gain coin!
+		if by_drill:
+			emit_signal("drilled_coin", CoinsCount)
 	$StaticBody2D/DamageSprite.visible = false
 	$StaticBody2D/CollisionShape2D.disabled = true
 
@@ -70,4 +75,4 @@ func self_destruct_after(delay, angle):
 	$Tween.start()
 
 func _on_Tween_tween_all_completed():
-	destroy()
+	destroy(false)

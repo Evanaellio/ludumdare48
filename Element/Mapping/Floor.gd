@@ -13,6 +13,8 @@ func _ready():
 		new_block.global_position = world_position
 		if ground_tile == Vector2(11,6): # Middle block by default
 			starting_pos = world_position + Vector2(16,16)
+		# Forward drilled signal to FallingGround
+		new_block.connect("drilled_coin", get_parent().get_parent(), "_on_block_coin_drilled")
 		$Blocks.add_child(new_block)
 
 var signal_counter = 0
