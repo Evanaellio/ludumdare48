@@ -42,12 +42,8 @@ func instanciate_random_level(position):
 	return random_level
 
 func goto_next_level():
-	if is_first_level:
-		is_first_level = false
-	else:
-		playWaterTransition()
-	
 	emit_signal("goto_next_floor", breaking_block_pos)
+	$WaterfallTimer.start()
 	breaking_block_pos = Vector2.ZERO
 	current_level = next_level
 	var current_floorbase = current_level.get_node("FloorBase")
@@ -69,3 +65,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	$WaterLayer/WaterNext.position.y = 400
 	$WaterLayer/WaterCurrent.scale.y = 4.5
 	$WaterLayer/WaterNext.scale.y = 1.5
+
+
+func _on_WaterfallTimer_timeout():
+	if is_first_level:
+		is_first_level = false
+	else:
+		playWaterTransition()
