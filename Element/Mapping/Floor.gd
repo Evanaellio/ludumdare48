@@ -4,6 +4,7 @@ const block : PackedScene = preload("res://Element/Blocs/Block_Basic.tscn")
 
 var starting_pos : Vector2 # Starting position for collapse
 var block_distance = {}
+var theme = "Basic" # Default theme, changed by FallingGround.gd
 
 enum Tiles {EMPTY = -1, GROUND, COIN, SPIKE, WALL}
 
@@ -29,6 +30,7 @@ func configure_block(tile_pos, tile):
 	new_block.Spiky = (tile == Tiles.SPIKE)
 	new_block.is_wall = (tile == Tiles.WALL)
 	
+	new_block.Sprite_Type = theme
 	
 	# Forward drilled signal to FallingGround
 	new_block.connect("drilled_coin", get_parent().get_parent(), "_on_block_coin_drilled")

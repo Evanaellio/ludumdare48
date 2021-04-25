@@ -16,6 +16,8 @@ var level_count = 0
 
 var collapse_time = 10 # initial timer, should decrease when difficulty increases
 
+var themes = ["Basic", "Wood"]
+
 var mobs = {
 	"basic": {
 		"seastar": 50,
@@ -63,6 +65,7 @@ func instanciate_random_level(position):
 	var choice = floors[randi() % floors.size()]
 	var random_level =  choice.instance()
 	random_level.global_position = position
+	random_level.get_node('FloorBase').theme = themes[int(level_count / 5) % themes.size()]
 	populate_level(random_level)
 	add_child(random_level)
 	return random_level
@@ -79,6 +82,7 @@ func goto_next_level():
 	breaking_block_pos = Vector2.ZERO
 	current_level = next_level
 	var current_floorbase = current_level.get_node("FloorBase")
+	print(int(level_count / 5), ' mod ' , themes.size(), " equals ", int(level_count / 5) % themes.size())
 	next_level = instanciate_random_level(current_floorbase.get_node("End").get_global_position())
 	self.connect("goto_next_floor", current_floorbase, "_on_Floor_goto_next_floor")
 
