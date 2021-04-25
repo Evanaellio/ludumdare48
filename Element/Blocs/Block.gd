@@ -4,6 +4,7 @@ export (int) var DAMAGE = 0 setget set_damage
 
 export (bool) var Grassy = true
 export (String) var Sprite_Type = "Basic"
+export (bool) var Hidden_Coin = false
 
 const MAX_DAMAGE = 3
 
@@ -12,6 +13,8 @@ func _ready():
 		get_node("StaticBody2D/Basic/Block_grass").set_visible(false)
 		get_sprite_node().set_visible(true)
 	update_grass(Grassy)
+	if Hidden_Coin:
+		update_coin(Hidden_Coin)
 
 func update_sprite(var bsprite):
 	get_sprite_node().set_visible(false)
@@ -22,6 +25,10 @@ func update_grass(var grass):
 	get_sprite_node().set_visible(false)
 	Grassy = grass
 	get_sprite_node().set_visible(true)
+
+func update_coin(var coin):
+	$StaticBody2D/HiddenCoinSprite.visible = coin
+	Hidden_Coin = coin
 
 func get_texture():
 	return get_sprite_node().texture
@@ -47,6 +54,9 @@ func do_damage():
 
 func destroy(): # Yes, but actually no
 	get_sprite_node().set_visible(false)
+	if Hidden_Coin:
+		$StaticBody2D/HiddenCoinSprite.visible = false
+		# TODO If destroyed by player gain coin!
 	$StaticBody2D/DamageSprite.visible = false
 	$StaticBody2D/CollisionShape2D.disabled = true
 
