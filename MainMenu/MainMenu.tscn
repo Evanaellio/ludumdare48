@@ -183,7 +183,6 @@ margin_right = 736.0
 margin_bottom = 315.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
 [connection signal="pressed" from="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer/Exit" to="." method="_on_Exit_pressed"]
