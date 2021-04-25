@@ -36,7 +36,17 @@ var player_acceleration = Vector2.ZERO
 var drilling = false
 var closest_block: Node2D = null
 
+var SPRITES_NODE = []
+
 func _ready():
+	SPRITES_NODE = [
+		get_node("../RightHand/Sprite"),
+		get_node("../LeftHand/Sprite"),
+		get_node("../RightFoot/Sprite"),
+		get_node("../LeftFoot/Sprite"),
+		get_node("Sprite_body"),
+		get_node("Sprite_head")]
+
 	pass # Replace with function body.
 
 func _input(event):
@@ -167,8 +177,8 @@ func _integrate_forces(var s):
 
 	# Update siding
 	if new_siding_left != siding_left:
-		#$Body/Sprite.flip_h = new_siding_left
-		#$Head/Sprite.flip_h = new_siding_left
+		for node in SPRITES_NODE:
+			node.flip_h = !new_siding_left
 		siding_left = new_siding_left
 
 	# Change animation
