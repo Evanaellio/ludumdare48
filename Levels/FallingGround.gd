@@ -84,7 +84,10 @@ func _on_PlayerBody_dig_block(position):
 
 	
 func playWaterTransition():
-	$WaterLayer/AnimationPlayer.stop(true)
+	if $WaterLayer/AnimationPlayer.is_playing():
+		$WaterLayer/AnimationPlayer.stop(true)
+		_on_AnimationPlayer_animation_finished("Water")
+
 	$WaterLayer/AnimationPlayer.play("Water")
 
 
