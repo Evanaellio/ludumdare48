@@ -13,3 +13,7 @@ func _on_DamageArea_body_entered(body):
 		var player = get_node(p)
 		player.hurt()
 		player.knockback(Vector2(0, -25))
+
+	elif body.is_in_group("killable-mobs"):
+		print("spiking " + name)
+		body.queue_free()

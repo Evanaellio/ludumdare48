@@ -16,8 +16,9 @@ height = 1.76339
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5.03243, 5.50014 )
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 7.5, 28 )
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 6.82917
+height = 43.2629
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 2.85451

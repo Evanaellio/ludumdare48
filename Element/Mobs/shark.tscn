@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Sprite/Moving/Shark.png" type="Texture" id=1]
 [ext_resource path="res://Element/Mobs/shark.gd" type="Script" id=2]
@@ -50,7 +50,15 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Shark" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 10.1047
+height = 23.8417
+
+[node name="Shark" type="RigidBody2D" groups=[
+"killable-mobs",
+]]
+mode = 2
+gravity_scale = 0.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -80,6 +88,12 @@ angle = 180.0
 scale_amount = 0.4
 hue_variation = 0.05
 hue_variation_random = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2.83482, 0.31498 )
+rotation = 1.57079
+shape = SubResource( 4 )
+
 [connection signal="body_entered" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_entered"]
 [connection signal="body_exited" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_exited"]
 [connection signal="body_entered" from="Sprite/PlayerDetect" to="Sprite" method="_on_PlayerDetect_body_entered"]
