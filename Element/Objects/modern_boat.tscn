@@ -1,19 +1,17 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Assets/Sprite/Static/ModernBoat.png" type="Texture" id=1]
+[ext_resource path="res://Element/Player_NonPhysics.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Sprite/Light/Round_Light.png" type="Texture" id=2]
 [ext_resource path="res://Element/Objects/modern_boat.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat/Bridge.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat/Foreground.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat/Propeller.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat/Background.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat/Antennas.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat/ReelBackground.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sprite/Static/ModernBoat/ReelForeground.png" type="Texture" id=10]
 
-[sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( -83.762, 1.24972, -62.1651, 5.61309, -22.4341, 8.87792, 7.59178, 6.07177, 52.3151, 5.52086, 68.8158, -7.38403, 97.6817, -8.71888, 104.782, 51.1972, -99.1946, 45.3354, -126.377, -11.2415 )
-
-[sub_resource type="OccluderPolygon2D" id=2]
-polygon = PoolVector2Array( -51.1251, -11.3231, -72.9224, 13.561, -5.13755, 15.0475, -5.2078, -27.4921, -47.6819, -28.0097 )
-
-[sub_resource type="OccluderPolygon2D" id=3]
-polygon = PoolVector2Array( 31.4419, 8.32721, 47.4942, -15.2122, 44.0984, -19.0383, 41.0345, -25.0601, 41.0279, -37.0141, 44.0456, -42.9449, 50.2595, -50.3085, 55.593, -51.9739, 60.6365, -52.014, 52.9834, -11.7019, 40.1283, 8.0601 )
-
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=1]
 length = 10.0
 loop = true
 tracks/0/type = "value"
@@ -41,7 +39,7 @@ tracks/1/keys = {
 "values": [ 0.0, -1.5, 2.0, -2.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("RedPosLight:enabled")
+tracks/2/path = NodePath("LightSetup/RedPosLight:enabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -53,7 +51,7 @@ tracks/2/keys = {
 "values": [ true, true, false, false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("GreenPosLight:enabled")
+tracks/3/path = NodePath("LightSetup/GreenPosLight:enabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -67,44 +65,63 @@ tracks/3/keys = {
 
 [node name="Modernboat" type="Node2D"]
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -0.4, -0.6 )
-rotation = -0.0302524
-texture = ExtResource( 1 )
+[node name="Node2D" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="RedPosLight" type="Light2D" parent="Sprite"]
-position = Vector2( -45, -29 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D"]
+anims/idle-loop = SubResource( 1 )
+
+[node name="Background" type="Node2D" parent="Node2D"]
+
+[node name="Back" type="Sprite" parent="Node2D/Background"]
+light_mask = 2
+texture = ExtResource( 7 )
+
+[node name="Reel" type="Sprite" parent="Node2D/Background"]
+light_mask = 2
+texture = ExtResource( 9 )
+
+[node name="MiddleGround" type="Node2D" parent="Node2D"]
+
+[node name="Bridge" type="Sprite" parent="Node2D/MiddleGround"]
+light_mask = 3
+texture = ExtResource( 4 )
+
+[node name="Antennas" type="Sprite" parent="Node2D/MiddleGround"]
+light_mask = 3
+texture = ExtResource( 8 )
+
+[node name="Propeller" type="Sprite" parent="Node2D/MiddleGround"]
+texture = ExtResource( 6 )
+
+[node name="Player_NonPhysics" parent="Node2D/MiddleGround" instance=ExtResource( 1 )]
+
+[node name="Foreground" type="Node2D" parent="Node2D"]
+
+[node name="Reel" type="Sprite" parent="Node2D/Foreground"]
+texture = ExtResource( 10 )
+
+[node name="Fore" type="Sprite" parent="Node2D/Foreground"]
+texture = ExtResource( 5 )
+
+[node name="LightSetup" type="Node2D" parent="Node2D"]
+
+[node name="RedPosLight" type="Light2D" parent="Node2D/LightSetup"]
+position = Vector2( -45, -30 )
+texture = ExtResource( 2 )
+texture_scale = 4.0
+color = Color( 1, 0.0784314, 0.0784314, 1 )
+energy = 0.5
+shadow_enabled = true
+
+[node name="GreenPosLight" type="Light2D" parent="Node2D/LightSetup"]
+light_mask = 2
+position = Vector2( -45, -35 )
 enabled = false
 texture = ExtResource( 2 )
-texture_scale = 3.0
-color = Color( 1, 0.0784314, 0.0784314, 1 )
-shadow_enabled = true
-
-[node name="GreenPosLight" type="Light2D" parent="Sprite"]
-position = Vector2( -45, -35 )
-texture = ExtResource( 2 )
-texture_scale = 3.0
+texture_scale = 4.0
 color = Color( 0.0784314, 1, 0.0784314, 1 )
+energy = 0.5
+range_item_cull_mask = 2
 shadow_enabled = true
-shadow_item_cull_mask = 3
-
-[node name="LightOccluderForeground" type="LightOccluder2D" parent="Sprite"]
-light_mask = 3
-occluder = SubResource( 1 )
-light_mask = 3
-
-[node name="LightOccluderBridge" type="LightOccluder2D" parent="Sprite"]
-light_mask = 3
-position = Vector2( -0.132439, 0 )
-occluder = SubResource( 2 )
-light_mask = 3
-
-[node name="LightOccluderFrontReel" type="LightOccluder2D" parent="Sprite"]
-light_mask = 2
-occluder = SubResource( 3 )
-light_mask = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
-anims/idle-loop = SubResource( 4 )
-[connection signal="animation_finished" from="Sprite/AnimationPlayer" to="Sprite" method="_on_AnimationPlayer_animation_finished"]
+shadow_item_cull_mask = 2

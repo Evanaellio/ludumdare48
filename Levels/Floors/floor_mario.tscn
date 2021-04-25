@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Element/Items/Coin.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Element/Mapping/floor_base.tscn" type="PackedScene" id=2]
+
+[node name="Floor" type="Node2D"]
+
+[node name="FloorBase" parent="." instance=ExtResource( 2 )]
+
+[node name="TileMap" parent="FloorBase" index="0"]
+tile_data = PoolIntArray( 0, 3, 0, 23, 3, 0, 65536, 3, 0, 65559, 3, 0, 131072, 3, 0, 131095, 3, 0, 196608, 3, 0, 196631, 3, 0, 262144, 3, 0, 262145, 0, 0, 262159, 0, 0, 262160, 0, 0, 262166, 0, 0, 262167, 3, 0, 327680, 3, 0, 327681, 0, 0, 327682, 1, 0, 327687, 0, 0, 327688, 0, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327702, 0, 0, 327703, 3, 0, 393216, 3, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 1, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 1, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 2, 0, 393234, 2, 0, 393235, 0, 0, 393236, 2, 0, 393237, 2, 0, 393238, 0, 0, 393239, 3, 0 )
+
+[node name="Coins" type="Node2D" parent="FloorBase"]
+
+[node name="Coin" parent="FloorBase/Coins" instance=ExtResource( 1 )]
+position = Vector2( 720, 118 )
+
+[node name="Coin6" parent="FloorBase/Coins" instance=ExtResource( 1 )]
+position = Vector2( 730, 118 )
+
+[node name="Coin2" parent="FloorBase/Coins" instance=ExtResource( 1 )]
+position = Vector2( 710, 118 )
+
+[node name="Coin3" parent="FloorBase/Coins" instance=ExtResource( 1 )]
+position = Vector2( 724, 92 )
+
+[node name="Coin4" parent="FloorBase/Coins" instance=ExtResource( 1 )]
+position = Vector2( 712, 92 )
+rotation = 2.93104
+
+[node name="Coin5" parent="FloorBase/Coins" instance=ExtResource( 1 )]
+position = Vector2( 724, 62 )
+rotation = 2.93104
+
+[editable path="FloorBase"]
