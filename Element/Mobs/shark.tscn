@@ -4,17 +4,20 @@
 [ext_resource path="res://Element/Mobs/shark.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Sprite/Static/Courant.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 30, 14 )
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 12.0
+height = 27.0
 
 [sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 30, 14 )
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 64, 16 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "idle-loop"
+[sub_resource type="Animation" id=4]
 length = 8.0
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("..:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -26,33 +29,29 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 22, -0.333 ), Vector2( -2, 3 ), Vector2( -23, 1.5 ), Vector2( 0, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/path = NodePath("..:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1.5, 2.5, 8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 2.5, 5, 6.5, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 10.0, -10.0, 0.0 ]
+"values": [ -90.0, -93.0, -87.0, -92.0, -90.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath(".:scale")
+tracks/2/path = NodePath("..:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 4, 8 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 3.5, 4, 4.5, 8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1, -0.9 ), Vector2( 1, -1 ), Vector2( 1, -0.9 ), Vector2( 1, 1 ) ]
 }
-
-[sub_resource type="CapsuleShape2D" id=4]
-radius = 10.1047
-height = 23.8417
 
 [node name="Shark" type="RigidBody2D" groups=[
 "killable-mobs",
@@ -60,26 +59,31 @@ height = 23.8417
 mode = 2
 gravity_scale = 0.0
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="CollisionShape2D"]
+rotation = 1.5708
 texture = ExtResource( 1 )
 flip_h = true
 script = ExtResource( 2 )
 
-[node name="BumperDetect" type="Area2D" parent="Sprite"]
+[node name="BumperDetect" type="Area2D" parent="CollisionShape2D/Sprite"]
 
-[node name="BumpShape" type="CollisionShape2D" parent="Sprite/BumperDetect"]
-shape = SubResource( 1 )
-
-[node name="PlayerDetect" type="Area2D" parent="Sprite"]
-
-[node name="AlertShape" type="CollisionShape2D" parent="Sprite/PlayerDetect"]
-position = Vector2( 72, 0 )
+[node name="BumpShape" type="CollisionShape2D" parent="CollisionShape2D/Sprite/BumperDetect"]
 shape = SubResource( 2 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
-anims/idle-loop = SubResource( 3 )
+[node name="PlayerDetect" type="Area2D" parent="CollisionShape2D/Sprite"]
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="Sprite"]
+[node name="AlertShape" type="CollisionShape2D" parent="CollisionShape2D/Sprite/PlayerDetect"]
+position = Vector2( 72, 0 )
+shape = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionShape2D/Sprite"]
+anims/idle-loop = SubResource( 4 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CollisionShape2D/Sprite"]
 texture = ExtResource( 3 )
 direction = Vector2( -1, 0 )
 gravity = Vector2( 0, -10 )
@@ -88,14 +92,8 @@ angle = 180.0
 scale_amount = 0.4
 hue_variation = 0.05
 hue_variation_random = 0.5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 2.83482, 0.31498 )
-rotation = 1.57079
-shape = SubResource( 4 )
-
-[connection signal="body_entered" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_entered"]
-[connection signal="body_exited" from="Sprite/BumperDetect" to="Sprite" method="_on_BumperDetect_body_exited"]
-[connection signal="body_entered" from="Sprite/PlayerDetect" to="Sprite" method="_on_PlayerDetect_body_entered"]
-[connection signal="body_exited" from="Sprite/PlayerDetect" to="Sprite" method="_on_PlayerDetect_body_exited"]
-[connection signal="animation_finished" from="Sprite/AnimationPlayer" to="Sprite" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="CollisionShape2D/Sprite/BumperDetect" to="CollisionShape2D/Sprite" method="_on_BumperDetect_body_entered"]
+[connection signal="body_exited" from="CollisionShape2D/Sprite/BumperDetect" to="CollisionShape2D/Sprite" method="_on_BumperDetect_body_exited"]
+[connection signal="body_entered" from="CollisionShape2D/Sprite/PlayerDetect" to="CollisionShape2D/Sprite" method="_on_PlayerDetect_body_entered"]
+[connection signal="body_exited" from="CollisionShape2D/Sprite/PlayerDetect" to="CollisionShape2D/Sprite" method="_on_PlayerDetect_body_exited"]
+[connection signal="animation_finished" from="CollisionShape2D/Sprite/AnimationPlayer" to="CollisionShape2D/Sprite" method="_on_AnimationPlayer_animation_finished"]
