@@ -301,10 +301,13 @@ light_mask = 3
 texture = ExtResource( 3 )
 
 [node name="Light2D" type="Light2D" parent="Node2D/Body/Head"]
+light_mask = 4
 enabled = false
 texture = ExtResource( 8 )
 offset = Vector2( -24, 3 )
 color = Color( 0.952941, 0.941176, 0.262745, 1 )
+range_item_cull_mask = 4
+shadow_item_cull_mask = 4
 
 [node name="FootR" type="Sprite" parent="Node2D/Body"]
 light_mask = 3
