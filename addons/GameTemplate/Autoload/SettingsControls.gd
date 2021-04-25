@@ -2,7 +2,7 @@ extends Node
 
 
 #CONTROLS
-var Actions:Array = ["Right", "Left", "Up", "Down", "Jump"]
+var Actions:Array = ["Right", "Left", "Jump", "Drill"]
 var ActionControls:Dictionary = {}
 
 #CONTROLS

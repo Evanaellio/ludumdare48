@@ -13,6 +13,21 @@ var is_first_level = true
 
 var collapse_time = 10 # initial timer, should decrease when difficulty increases
 
+var mobs = {
+	"basic": {
+		"seastar": 50,
+		"pufferfish": 40,
+		"shark": 10,
+	},
+	"pirate": {
+		
+	},
+	
+	"dark": {
+		
+	}
+}
+
 func _ready():
 	load_floors()
 	next_level = instanciate_random_level(transform.origin)
@@ -44,6 +59,7 @@ func instanciate_random_level(position):
 	var choice = floors[randi() % floors.size()]
 	var random_level =  choice.instance()
 	random_level.global_position = position
+	populate_level(random_level)
 	add_child(random_level)
 	return random_level
 
@@ -90,3 +106,33 @@ func _on_Player_hp_changed(hp: int):
 	
 	if hp < 1:
 		Game.emit_signal("ChangeScene", RIP_Screen)
+
+func random_weighted(weighted: Dictionary):
+	var target = rand_range(0, 100) as int
+	for key in weighted.keys():
+		var val = weighted[key]
+		if val > target:
+			return key
+		target -= val
+
+func populate_level(level):
+	var biome = "basic"
+	var enemy_min = 3
+	var enemy_max = 5
+	
+	var nb = rand_range(enemy_min, enemy_max + 1) as int
+	
+	for i in range(0, nb):
+		var types = mobs[biome]
+		
+		var type = random_weighted(types)
+		
+		type = types.keys()[randi() % types.size()]
+		
+		var prefab = load("res://Element/Mobs/" + type + ".tscn")
+		var mob = prefab.instance()
+		
+		mob.position.y = 96
+		mob.position.x = rand_range(32.0, 23*32.0)
+		
+		level.add_child(mob)
