@@ -77,11 +77,11 @@ func goto_next_level():
 	self.connect("goto_next_floor", current_floorbase, "_on_Floor_goto_next_floor")
 
 
-func _on_PlayerBody_dig_block(position):
-	breaking_block_pos = position
-	$CollapseTimer.start(max(0.01, $CollapseTimer.time_left - collapse_time / 4))
+func _on_PlayerBody_dig_block(block):
+	breaking_block_pos = block.global_position
+	if block.can_collapse_floor:
+		$CollapseTimer.start(max(0.01, $CollapseTimer.time_left - collapse_time / 4))
 	
-
 	
 func playWaterTransition():
 	if $WaterLayer/AnimationPlayer.is_playing():

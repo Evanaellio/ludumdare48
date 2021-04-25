@@ -2,7 +2,7 @@ extends Node2D
 
 const block : PackedScene = preload("res://Element/Blocs/Block_Basic.tscn")
 
-var starting_pos : Vector2
+var starting_pos : Vector2 # Starting position for collapse
 var block_distance = {}
 
 func _ready():
@@ -11,8 +11,11 @@ func _ready():
 		var world_position = $TileMap.map_to_world(ground_tile) + Vector2(16,16) + global_position
 		var new_block = block.instance()
 		new_block.global_position = world_position
-		if ground_tile == Vector2(11,6): # Middle block by default
-			starting_pos = world_position + Vector2(16,16)
+		if ground_tile.y == 6: #Bottom line
+			new_block.can_collapse_floor = true
+			if ground_tile.x == 11:
+				# Default starting position for collapse : between 2 middle blocks
+				starting_pos = world_position + Vector2(16,16)
 		$Blocks.add_child(new_block)
 
 var signal_counter = 0

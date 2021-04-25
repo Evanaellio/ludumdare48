@@ -5,7 +5,7 @@ var siding_left = true
 var jumping = false
 var stopping_jump = false
 
-signal dig_block(position)
+signal dig_block(block)
 signal hp_changed(hp)
 
 export (int) var WALK_ACCEL = 800.0
@@ -225,5 +225,5 @@ func set_drilling(new_drilling):
 
 func _on_DrillingTimer_timeout():
 	if drilling && closest_block:
-		emit_signal("dig_block", closest_block.global_position)
+		emit_signal("dig_block", closest_block)
 		closest_block.do_damage()

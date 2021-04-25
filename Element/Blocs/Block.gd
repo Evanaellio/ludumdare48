@@ -6,6 +6,8 @@ export (bool) var Grassy = true
 export(String, "Basic", "Wood") var Sprite_Type = "Basic"
 export (bool) var Hidden_Coin = false
 
+var can_collapse_floor = false # Blocks at the bottom of the floor
+
 const MAX_DAMAGE = 3
 
 func _ready():
