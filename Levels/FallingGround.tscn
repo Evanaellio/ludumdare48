@@ -292,6 +292,9 @@ wait_time = 10.0
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 192.19, 110.23 )
 
+[node name="DrillingTimer" parent="Player/PlayerBody" index="6"]
+wait_time = 0.25
+
 [node name="WaterLayer" type="Node2D" parent="."]
 
 [node name="WaterCurrent" type="Sprite" parent="WaterLayer"]
