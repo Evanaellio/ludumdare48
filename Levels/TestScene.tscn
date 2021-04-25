@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/m5x7_16.tres" type="DynamicFont" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Element/Mobs/shark.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Element/Objects/Spike.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Element/Mobs/pufferfish.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Element/Items/Coin.tscn" type="PackedScene" id=9]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
@@ -66,8 +67,9 @@ position = Vector2( 16, 136 )
 Grassy = false
 
 [node name="Block5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 48, 135.937 )
+position = Vector2( 48, 136 )
 Grassy = false
+Hidden_Coin = true
 
 [node name="Block6" parent="." instance=ExtResource( 3 )]
 position = Vector2( 80, 135.937 )
@@ -167,6 +169,7 @@ position = Vector2( 592, 136 )
 
 [node name="Block23" parent="." instance=ExtResource( 3 )]
 position = Vector2( 624, 136.063 )
+Hidden_Coin = true
 
 [node name="Block24" parent="." instance=ExtResource( 3 )]
 position = Vector2( 656, 136.063 )
@@ -234,6 +237,7 @@ Sprite_Type = "Wood"
 [node name="Block6" parent="Block34" instance=ExtResource( 3 )]
 position = Vector2( 160, 0 )
 Sprite_Type = "Wood"
+Hidden_Coin = true
 
 [node name="Block7" parent="Block34" instance=ExtResource( 3 )]
 position = Vector2( 192, 0 )
@@ -324,6 +328,7 @@ Sprite_Type = "Wood"
 [node name="Block7" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 96, -64 )
 Sprite_Type = "Wood"
+Hidden_Coin = true
 
 [node name="Block8" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 160, 0 )
@@ -356,5 +361,11 @@ Sprite_Type = "Wood"
 [node name="Block11" parent="Block34" instance=ExtResource( 3 )]
 position = Vector2( 224, -64 )
 Sprite_Type = "Wood"
+
+[node name="Coin2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 616, 64 )
+
+[node name="Coin" parent="." instance=ExtResource( 9 )]
+position = Vector2( 320, 224 )
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_Button_pressed"]
