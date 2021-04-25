@@ -3,7 +3,7 @@ extends Node2D
 export (int) var DAMAGE = 0 setget set_damage
 
 export (bool) var Grassy = true
-export(String, "Basic", "Wood") var Sprite_Type = "Basic"
+export(String, "Basic", "Wood", "Dark") var Sprite_Type = "Basic"
 export (bool) var Hidden_Coin = false
 export (bool) var Spiky = false
 export (int) var CoinsCount = 5

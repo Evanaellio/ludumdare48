@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Assets/Sprite/Static/Block_basic_grass_1.png" type="Texture" id=1]
 [ext_resource path="res://Element/Blocs/Block.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Assets/Sprite/Static/block_wood_grass.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Sprite/Static/block_wood.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Sprite/Item/Hidden_Coin.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprite/Static/Block_dark_grass.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprite/Static/Block_dark.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -56,6 +58,16 @@ texture = ExtResource( 5 )
 [node name="Block" type="Sprite" parent="StaticBody2D/Wood"]
 visible = false
 texture = ExtResource( 6 )
+
+[node name="Dark" type="Node2D" parent="StaticBody2D"]
+
+[node name="Block_grass" type="Sprite" parent="StaticBody2D/Dark"]
+visible = false
+texture = ExtResource( 8 )
+
+[node name="Block" type="Sprite" parent="StaticBody2D/Dark"]
+visible = false
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 1 )

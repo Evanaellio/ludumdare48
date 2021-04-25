@@ -304,59 +304,59 @@ Sprite_Type = "Wood"
 
 [node name="Block2" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 64, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block3" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 96, 0 )
 Grassy = false
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block4" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 96, -32 )
 Grassy = false
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block5" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 128, 0 )
 Grassy = false
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block6" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 128, -32 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block7" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 96, -64 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 Hidden_Coin = true
 
 [node name="Block8" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 160, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block9" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 192, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block10" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 224, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block11" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 256, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block12" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 288, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block13" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 320, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block14" parent="Block34/Block10/Block5/Block3/Block" instance=ExtResource( 3 )]
 position = Vector2( 352, 0 )
-Sprite_Type = "Wood"
+Sprite_Type = "Dark"
 
 [node name="Block11" parent="Block34" instance=ExtResource( 3 )]
 position = Vector2( 224, -64 )
