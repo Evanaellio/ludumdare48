@@ -23,7 +23,7 @@ func update_biome(new_biome):
 		current_distribution[f_index] -= 1
 		total_weight_distribution -=1
 		node.frame = f_index
-		print(node.frame)
+		#print(node.frame)
 	new_biome = sprite_Type
 
 func random_weighted(weighted: Dictionary, total_weight):

@@ -95,7 +95,7 @@ func goto_next_level():
 	breaking_block_pos = Vector2.ZERO
 	current_level = next_level
 	var current_floorbase = current_level.get_node("FloorBase")
-	print(int(level_count / 5), ' mod ' , themes.size(), " equals ", int(level_count / 5) % themes.size())
+	#print(int(level_count / 5), ' mod ' , themes.size(), " equals ", int(level_count / 5) % themes.size())
 	next_level = instanciate_random_level(current_floorbase.get_node("End").get_global_position())
 	self.connect("goto_next_floor", current_floorbase, "_on_Floor_goto_next_floor")
 
