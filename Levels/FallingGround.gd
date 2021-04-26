@@ -96,7 +96,7 @@ func instanciate_random_level(position):
 
 func goto_next_level():
 	PlayerVariables.level += 1
-	HUD.level_update()
+	_on_level_changed()
 	emit_signal("goto_next_floor", breaking_block_pos)
 	$CollapseTimer.start(collapse_time)
 	if is_first_level:
@@ -142,7 +142,7 @@ func _on_Player_hp_changed(hp: int):
 func _on_Player_score_changed(count: int, incremental: int):
 	HUD.score_change(incremental)
 
-func _on_level_changed(level: int):
+func _on_level_changed():
 	HUD.level_update()
 	
 	$Music.set_theme(current_level_theme)
