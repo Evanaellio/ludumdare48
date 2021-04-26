@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 
-onready var score_digits = $RunScore/Digits
+onready var score_digits = $VBoxContainer/RunScore/Digits
 
 
 func _ready():
