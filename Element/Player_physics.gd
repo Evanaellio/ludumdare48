@@ -19,7 +19,7 @@ export (int) var STOP_JUMP_FORCE = 900.0
 export (int) var TERMINAL_SPEED = 800.0
 var shaky_cam = null
 
-export (int) var HP = 6
+#export (int) var HP = 6
 export (int) var COINS = 0
 export (int) var COIN_VALUE = 5
 export var INVULNERABILITY_TIME = 1
@@ -208,9 +208,9 @@ func knockback(vector: Vector2, from_global_pos: Vector2):
 func hurt():
 	if hit_timer > INVULNERABILITY_TIME:
 		hit_timer = 0
-		HP = HP - 1
-		print("HP=" + str(HP))
-		emit_signal("hp_changed", HP)
+		PlayerVariables.health -= 1
+		print("HP=" + str(PlayerVariables.health))
+		emit_signal("hp_changed", PlayerVariables.health)
 		$HurtSFX.play()
 
 func invulnerability_flash():

@@ -152,5 +152,4 @@ position = Vector2( -1, 7 )
 node_a = NodePath("../../PlayerBody")
 node_b = NodePath("../../RightFoot")
 softness = 1.0
-
 [connection signal="timeout" from="PlayerBody/DrillingTimer" to="PlayerBody" method="_on_DrillingTimer_timeout"]

@@ -4,8 +4,10 @@ signal goto_next_floor(breaking_block)
 
 export (PackedScene) var RIP_Screen: PackedScene
 
-onready var score_ui = $CanvasLayer/ScoreUI
-onready var level_ui = $CanvasLayer/Level
+#onready var score_ui = $CanvasLayer/ScoreUI
+#onready var level_ui = $CanvasLayer/Level
+
+onready var HUD = $CanvasLayer/HUD
 
 var breaking_block_pos = Vector2.ZERO
 var floors = []
@@ -13,7 +15,9 @@ var current_level : Node2D
 var next_level : Node2D
 var breaking_block_position
 var is_first_level = true
-var level_count = 0
+#var level_count = 0
+
+
 
 var collapse_time = 10 # initial timer, should decrease when difficulty increases
 
@@ -42,6 +46,9 @@ var mobs = {
 }
 
 func _ready():
+	PlayerVariables.level = 0
+	PlayerVariables.health = 6
+
 	randomize()
 
 	load_floors()
@@ -75,7 +82,7 @@ func instanciate_random_level(position):
 	var choice = floors[randi() % floors.size()]
 	var random_level =  choice.instance()
 	random_level.global_position = position
-	var theme = themes[int(level_count / 6) % themes.size()]
+	var theme = themes[int(PlayerVariables.level / 6) % themes.size()]
 	if update_theme:
 		update_theme = false
 		$ParallaxBackground/ParallaxLayer/Background.update_biome(theme)
@@ -88,14 +95,14 @@ func instanciate_random_level(position):
 	return random_level
 
 func goto_next_level():
-	level_count += 1
-	_on_level_changed(level_count)
+	PlayerVariables.level += 1
+	HUD.level_update()
 	emit_signal("goto_next_floor", breaking_block_pos)
 	$CollapseTimer.start(collapse_time)
 	if is_first_level:
 		is_first_level = false
 	else:
-		$Player/PlayerBody.add_score(10 * (level_count / 5 + 1))
+		$Player/PlayerBody.add_score(10 * (PlayerVariables.level / 5 + 1))
 		playWaterTransition()
 	breaking_block_pos = Vector2.ZERO
 	current_level = next_level
@@ -127,21 +134,16 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	$WaterLayer/WaterNext.scale.y = 1.5
 
 func _on_Player_hp_changed(hp: int):
-	$CanvasLayer/HP/Heart1.frame = 0 if hp > 1 else (1 if hp > 0 else 2)
-	$CanvasLayer/HP/Heart2.frame = 0 if hp > 3 else (1 if hp > 2 else 2)
-	$CanvasLayer/HP/Heart3.frame = 0 if hp > 5 else (1 if hp > 4 else 2)
+	HUD.health_update()
 
 	if hp < 1:
 		Game.emit_signal("ChangeScene", RIP_Screen)
 
 func _on_Player_score_changed(count: int, incremental: int):
-	score_ui.score_changed(count, incremental)
+	HUD.score_change(incremental)
 
 func _on_level_changed(level: int):
-	level_ui.text = "Level: "
-	if level < 100: level_ui.text += "0"
-	if level < 10: level_ui.text += "0"
-	level_ui.text += str(level)
+	HUD.level_update()
 	
 	$Music.set_theme(current_level_theme)
 
@@ -154,8 +156,8 @@ func random_weighted(weighted: Dictionary):
 		target -= val
 
 func populate_level(level, theme):
-	var enemy_min = 1 + (level_count / 5) * 1
-	var enemy_max = 3 + (level_count / 5) * 2
+	var enemy_min = 1 + (PlayerVariables.level / 5) * 1
+	var enemy_max = 3 + (PlayerVariables.level / 5) * 2
 
 	var nb = rand_range(enemy_min, enemy_max + 1) as int
 

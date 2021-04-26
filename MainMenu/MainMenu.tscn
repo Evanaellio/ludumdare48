@@ -291,7 +291,6 @@ text = "Exit"
 stream = ExtResource( 8 )
 autoplay = true
 bus = "Music"
-
 [connection signal="pressed" from="UI/HBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Exit" to="." method="_on_Exit_pressed"]

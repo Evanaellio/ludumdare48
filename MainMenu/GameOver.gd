@@ -1,11 +1,18 @@
 extends CanvasLayer
 
 
+onready var level_digits = $VBoxContainer/RunLevel/Digits
 onready var score_digits = $VBoxContainer/RunScore/Digits
 
 
 func _ready():
+	var run_level = PlayerVariables.level
 	var run_score = PlayerVariables.score
+	
+	level_digits.text = str(run_level)
+	if run_level < 1000: level_digits.text = "0" + level_digits.text
+	if run_level < 100: level_digits.text = "0" + level_digits.text
+	if run_level < 10: level_digits.text = "0" + level_digits.text
 	
 	score_digits.text = str(run_score)
 	if run_score < 100000: score_digits.text = "0" + score_digits.text
@@ -15,6 +22,7 @@ func _ready():
 	if run_score < 10: score_digits.text = "0" + score_digits.text
 	
 	PlayerVariables.score = 0
+	PlayerVariables.level = 0
 	
 	$AnimationPlayer.play("RIP")
 	$AudioStreamPlayer.play()
