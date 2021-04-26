@@ -78,7 +78,7 @@ func destroy(by_drill): # Yes, but actually no
 	$StaticBody2D/DamageSprite.visible = false
 	$StaticBody2D/CollisionShape2D.disabled = true
 	if spike_instance:
-		spike_instance.get_node("DamageArea/CollisionPolygon2D").disabled = true
+		spike_instance.queue_free()
 
 func self_destruct_after(delay, angle):
 	var transition = Tween.TRANS_CUBIC
