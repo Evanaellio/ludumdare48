@@ -291,6 +291,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Level" type="Label" parent="CanvasLayer"]
+margin_left = 652.0
+margin_top = 27.0
+margin_right = 732.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 5 )
+text = "Level: 000"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ShakyCamera2D" type="Camera2D" parent="."]
 position = Vector2( 384, 216 )
 current = true

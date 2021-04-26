@@ -5,6 +5,7 @@ signal goto_next_floor(breaking_block)
 export (PackedScene) var RIP_Screen: PackedScene
 
 onready var coins = $CanvasLayer/Score
+onready var level_ui = $CanvasLayer/Level
 
 var breaking_block_pos = Vector2.ZERO
 var floors = []
@@ -85,6 +86,7 @@ func instanciate_random_level(position):
 
 func goto_next_level():
 	level_count += 1
+	_on_level_changed(level_count)
 	emit_signal("goto_next_floor", breaking_block_pos)
 	$CollapseTimer.start(collapse_time)
 	if is_first_level:
@@ -137,6 +139,12 @@ func _on_Player_score_changed(count: int):
 	if count < 100: coins.text = "0" + coins.text
 	if count < 10: coins.text = "0" + coins.text
 	coins.text = "Score: " + coins.text
+
+func _on_level_changed(level: int):
+	level_ui.text = "Level: "
+	if level < 100: level_ui.text += "0"
+	if level < 10: level_ui.text += "0"
+	level_ui.text += str(level)
 
 func random_weighted(weighted: Dictionary):
 	var target = rand_range(0, 100) as int
