@@ -192,19 +192,21 @@ margin_left = 15.0
 margin_top = 15.0
 margin_right = 178.0
 margin_bottom = 40.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="UI/Credit"]
-margin_right = 174.0
+margin_right = 281.0
 margin_bottom = 26.0
 custom_fonts/font = ExtResource( 6 )
 text = "A Game made by:"
+align = 1
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="UI/Credit"]
 margin_top = 30.0
-margin_right = 174.0
+margin_right = 281.0
 margin_bottom = 86.0
 alignment = 1
 __meta__ = {
@@ -212,8 +214,8 @@ __meta__ = {
 }
 
 [node name="DevName_0" type="VBoxContainer" parent="UI/Credit/HBoxContainer3"]
-margin_left = 3.0
-margin_right = 105.0
+margin_left = 36.0
+margin_right = 138.0
 margin_bottom = 56.0
 
 [node name="Label" type="Label" parent="UI/Credit/HBoxContainer3/DevName_0"]
@@ -229,14 +231,16 @@ margin_bottom = 56.0
 custom_fonts/font = ExtResource( 6 )
 text = "Teanan"
 
-[node name="Spacing" type="VBoxContainer" parent="UI/Credit/HBoxContainer3"]
-margin_left = 109.0
-margin_right = 109.0
+[node name="Spacing" type="VSeparator" parent="UI/Credit/HBoxContainer3"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 142.0
+margin_right = 182.0
 margin_bottom = 56.0
+custom_constants/separation = 40
 
 [node name="DevName_1" type="VBoxContainer" parent="UI/Credit/HBoxContainer3"]
-margin_left = 113.0
-margin_right = 171.0
+margin_left = 186.0
+margin_right = 244.0
 margin_bottom = 56.0
 
 [node name="Label" type="Label" parent="UI/Credit/HBoxContainer3/DevName_1"]
