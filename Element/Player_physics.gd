@@ -7,7 +7,7 @@ var stopping_jump = false
 
 signal dig_block(block)
 signal hp_changed(hp)
-signal score_changed(score)
+signal score_changed(score, incremental)
 
 export (int) var WALK_ACCEL = 800.0
 export (int) var WALK_DEACCEL = 800.0
@@ -251,7 +251,7 @@ func _on_DrillingTimer_timeout():
 
 func add_score(score):
 	SCORE += score
-	emit_signal("score_changed", SCORE)
+	emit_signal("score_changed", SCORE, score)
 
 func add_coin(nb):
 	COINS += nb

@@ -4,7 +4,7 @@ signal goto_next_floor(breaking_block)
 
 export (PackedScene) var RIP_Screen: PackedScene
 
-onready var coins = $CanvasLayer/Score
+onready var score_ui = $CanvasLayer/ScoreUI
 onready var level_ui = $CanvasLayer/Level
 
 var breaking_block_pos = Vector2.ZERO
@@ -131,14 +131,8 @@ func _on_Player_hp_changed(hp: int):
 	if hp < 1:
 		Game.emit_signal("ChangeScene", RIP_Screen)
 
-func _on_Player_score_changed(count: int):
-	coins.text = str(count)
-	if count < 100000: coins.text = "0" + coins.text
-	if count < 10000: coins.text = "0" + coins.text
-	if count < 1000: coins.text = "0" + coins.text
-	if count < 100: coins.text = "0" + coins.text
-	if count < 10: coins.text = "0" + coins.text
-	coins.text = "Score: " + coins.text
+func _on_Player_score_changed(count: int, incremental: int):
+	score_ui.score_changed(count, incremental)
 
 func _on_level_changed(level: int):
 	level_ui.text = "Level: "
