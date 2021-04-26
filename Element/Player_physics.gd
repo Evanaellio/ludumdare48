@@ -211,6 +211,7 @@ func hurt():
 		HP = HP - 1
 		print("HP=" + str(HP))
 		emit_signal("hp_changed", HP)
+		$HurtSFX.play()
 
 func invulnerability_flash():
 	if invulnerability_flash_transparent:
