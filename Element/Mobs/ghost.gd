@@ -30,7 +30,7 @@ func _process(delta):
 
 	if player_ref:
 		move_vec = (player_ref.global_position - global_position).normalized()
-		
+
 	else:
 		move_vec = Vector2(randf() - 0.5, randf() - 0.5).normalized()
 
@@ -56,4 +56,4 @@ func _on_BumperArea_body_entered(body):
 
 	if name == "Player" or name.begins_with("Player"):
 		body.hurt()
-		body.knockback(Vector2(0, -25), global_position)
+		#body.knockback(Vector2(0, -25), global_position)
