@@ -20,6 +20,7 @@ func _on_HitArea_body_entered(body: Node):
 	if visible and body.is_in_group("killable-mobs"):
 		print("drilling " + name)
 		get_node("CPUParticles2D_Blood").emitting = true
+		$PierceFleshSFX.play()
 		
 		body.queue_free()
 		get_parent().add_score(30)

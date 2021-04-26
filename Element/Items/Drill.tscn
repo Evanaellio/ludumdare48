@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Sprite/Player/Drill-sheet.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sprite/Static/Block_basic_1.png" type="Texture" id=2]
 [ext_resource path="res://Element/Items/Drill.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Sprite/Static/Blood.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Sounds/drill.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/pierce_flesh.wav" type="AudioStream" id=6]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -25,12 +26,14 @@ animations = [ {
 [sub_resource type="CapsuleShape2D" id=4]
 height = 15.5221
 
+[sub_resource type="AudioStreamRandomPitch" id=5]
+audio_stream = ExtResource( 6 )
+
 [node name="Drill" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="CPUParticles2D_Block" type="CPUParticles2D" parent="."]
@@ -88,6 +91,12 @@ shape = SubResource( 4 )
 stream = ExtResource( 5 )
 volume_db = -14.284
 pitch_scale = 0.65
+bus = "SFX"
+
+[node name="PierceFleshSFX" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 5 )
+volume_db = -5.0
+pitch_scale = 0.9
 bus = "SFX"
 
 [connection signal="body_entered" from="HitArea" to="." method="_on_HitArea_body_entered"]
