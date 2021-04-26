@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://addons/GameTemplate/GUI/Buttons/DefaultButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Assets/Sprite/Decor/Background_MainMenu.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sounds/menu.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Assets/Sprite/icon.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=10]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -85,6 +86,18 @@ shader_param/blue_tint = Color( 0.0392157, 0.32549, 1, 1 )
 shader_param/sprite_scale = Vector2( 8, 4 )
 shader_param/scale_x = 1.0
 
+[sub_resource type="DynamicFont" id=4]
+size = 64
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 36
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
+
 [node name="MainMenu" type="CanvasLayer"]
 layer = 0
 script = ExtResource( 3 )
@@ -114,6 +127,10 @@ anchor_bottom = 1.0
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 294.809
+margin_top = 44.977
+margin_right = -290.191
+margin_bottom = -4.02298
 custom_constants/margin_right = 16
 custom_constants/margin_top = 16
 custom_constants/margin_left = 16
@@ -125,72 +142,124 @@ __meta__ = {
 [node name="VBoxMain" type="VBoxContainer" parent="UI/MarginContainer"]
 margin_left = 16.0
 margin_top = 16.0
-margin_right = 752.0
-margin_bottom = 416.0
+margin_right = 167.0
+margin_bottom = 367.0
 size_flags_vertical = 3
 
 [node name="CenterLogo" type="CenterContainer" parent="UI/MarginContainer/VBoxMain"]
-margin_right = 736.0
-margin_bottom = 64.0
+margin_right = 151.0
 
 [node name="Logo" type="TextureRect" parent="UI/MarginContainer/VBoxMain/CenterLogo"]
-margin_left = 336.0
-margin_right = 400.0
-margin_bottom = 64.0
+visible = false
+margin_left = 43.0
+margin_top = -32.0
+margin_right = 107.0
+margin_bottom = 32.0
 texture = ExtResource( 9 )
 
-[node name="Label" type="Label" parent="UI/MarginContainer/VBoxMain"]
-margin_top = 68.0
-margin_right = 736.0
-margin_bottom = 81.0
-custom_fonts/font = ExtResource( 6 )
-text = "The Lost Treasures of the Bloody Pufferfishes"
-align = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxMain"]
-margin_top = 85.0
-margin_right = 736.0
+[node name="Title" type="RichTextLabel" parent="UI"]
+margin_left = 56.0
+margin_top = 260.0
+margin_right = 486.0
 margin_bottom = 400.0
+rect_clip_content = false
+custom_fonts/normal_font = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center][wave amp=100 freq=2]The Lost Treasure[/wave][/center]"
+text = "The Lost Treasure"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="UI/Title"]
+margin_top = 60.0
+margin_right = 418.0
+margin_bottom = 140.0
+rect_clip_content = false
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center][wave amp=100 freq=2]of the Bloody Pufferfishes[/wave][/center]"
+text = "of the Bloody Pufferfishes"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Credit" type="RichTextLabel" parent="UI"]
+margin_left = 7.27966
+margin_top = 4.93345
+margin_right = 63.2797
+margin_bottom = 23.9335
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 6 )
+text = " MADE BY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="UI/Credit"]
+margin_left = 62.4605
+margin_top = -1.0
+margin_right = 124.46
+margin_bottom = 28.0
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 6 )
+text = "Evanaellio
+Teanan"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="UI/Credit"]
+margin_left = 123.379
+margin_top = -1.2973
+margin_right = 185.379
+margin_bottom = 27.7027
+rect_clip_content = false
+custom_fonts/normal_font = ExtResource( 6 )
+text = "Salier
+Wolfy"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="VBoxContainer" parent="UI"]
+margin_left = 530.0
+margin_top = 285.0
+margin_right = 702.0
+margin_bottom = 345.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 6
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="ButtonContainer" type="VBoxContainer" parent="UI/MarginContainer/VBoxMain/HBoxContainer"]
-margin_right = 55.0
-margin_bottom = 315.0
-size_flags_vertical = 3
-custom_constants/separation = 1
-
-[node name="NewGame" parent="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer" groups=[
+[node name="NewGame" parent="UI/HBoxContainer" groups=[
 "MainMenu",
 ] instance=ExtResource( 1 )]
-margin_right = 55.0
-margin_bottom = 14.0
+margin_top = 3.0
+margin_right = 172.0
+margin_bottom = 17.0
 text = "New Game"
 
-[node name="Options" parent="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer" instance=ExtResource( 1 )]
-margin_top = 15.0
-margin_right = 55.0
-margin_bottom = 29.0
+[node name="Options" parent="UI/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 23.0
+margin_right = 172.0
+margin_bottom = 37.0
 text = "Options"
 
-[node name="Exit" parent="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer" instance=ExtResource( 1 )]
-margin_top = 30.0
-margin_right = 55.0
-margin_bottom = 44.0
+[node name="Exit" parent="UI/HBoxContainer" instance=ExtResource( 1 )]
+margin_top = 43.0
+margin_right = 172.0
+margin_bottom = 57.0
 text = "Exit"
-
-[node name="RightMargin" type="Control" parent="UI/MarginContainer/VBoxMain/HBoxContainer"]
-margin_left = 59.0
-margin_right = 736.0
-margin_bottom = 315.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 autoplay = true
 bus = "Music"
 
-[connection signal="pressed" from="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer/NewGame" to="." method="_on_NewGame_pressed"]
-[connection signal="pressed" from="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer/Options" to="." method="_on_Options_pressed"]
-[connection signal="pressed" from="UI/MarginContainer/VBoxMain/HBoxContainer/ButtonContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="UI/HBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="pressed" from="UI/HBoxContainer/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="UI/HBoxContainer/Exit" to="." method="_on_Exit_pressed"]
