@@ -63,6 +63,7 @@ func set_damage(dmg):
 	$StaticBody2D/DamageSprite.frame = DAMAGE
 
 func do_damage():
+	$StaticBody2D/DirtSFX.play()
 	if DAMAGE == MAX_DAMAGE:
 		destroy(true)
 	set_damage(DAMAGE + 1)
@@ -87,6 +88,8 @@ func self_destruct_after(delay, angle):
 	$Tween.interpolate_property(self, "rotation_degrees", rotation_degrees, angle, 0.4, transition, easing, delay)
 	$Tween.interpolate_property(self, "position", position, position + 64 * Vector2.DOWN, 0.4, transition, easing, delay)
 	$Tween.start()
+	yield(get_tree().create_timer(delay), "timeout")
+	$StaticBody2D/DirtSFX.play()
 
 func _on_Tween_tween_all_completed():
 	destroy(false)
