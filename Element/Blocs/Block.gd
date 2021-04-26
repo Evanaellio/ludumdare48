@@ -72,6 +72,7 @@ func destroy(by_drill): # Yes, but actually no
 	if Hidden_Coin:
 		$StaticBody2D/HiddenCoinSprite.visible = false
 		if by_drill:
+			$StaticBody2D/CoinSFX.play()
 			emit_signal("drilled_coin", CoinsCount)
 	$StaticBody2D/DamageSprite.visible = false
 	$StaticBody2D/CollisionShape2D.disabled = true

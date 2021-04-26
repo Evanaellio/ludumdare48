@@ -10,4 +10,8 @@ func _on_Area2D_body_entered(body):
 	
 	if name == "Player" or name.begins_with("Player"):
 		body.add_coin(1)
-		queue_free()
+		$CollisionShape2D.disabled = true
+		$SFX.play()
+
+func _on_SFX_finished():
+	queue_free()
