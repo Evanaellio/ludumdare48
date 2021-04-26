@@ -1,12 +1,21 @@
 extends CanvasLayer
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
+onready var score_digits = $RunScore/Digits
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	var run_score = PlayerVariables.score
+	
+	score_digits.text = str(run_score)
+	if run_score < 100000: score_digits.text = "0" + score_digits.text
+	if run_score < 10000: score_digits.text = "0" + score_digits.text
+	if run_score < 1000: score_digits.text = "0" + score_digits.text
+	if run_score < 100: score_digits.text = "0" + score_digits.text
+	if run_score < 10: score_digits.text = "0" + score_digits.text
+	
+	PlayerVariables.score = 0
+	
 	$AnimationPlayer.play("RIP")
 	$AudioStreamPlayer.play()
 
