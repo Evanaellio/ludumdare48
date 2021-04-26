@@ -139,6 +139,8 @@ func _on_level_changed(level: int):
 	if level < 100: level_ui.text += "0"
 	if level < 10: level_ui.text += "0"
 	level_ui.text += str(level)
+	
+	$Music.set_theme(current_level_theme)
 
 func random_weighted(weighted: Dictionary):
 	var target = rand_range(0, 100) as int

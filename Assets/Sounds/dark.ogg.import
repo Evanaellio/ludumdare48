@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/dark.ogg-86e899bd1e6e703daaa350c9db78665a.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/dark.ogg"
+dest_files=[ "res://.import/dark.ogg-86e899bd1e6e703daaa350c9db78665a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

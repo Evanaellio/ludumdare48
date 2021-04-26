@@ -20,7 +20,6 @@ export (int) var TERMINAL_SPEED = 800.0
 var shaky_cam = null
 
 export (int) var HP = 6
-export (int) var SCORE = 0
 export (int) var COINS = 0
 export (int) var COIN_VALUE = 5
 export var INVULNERABILITY_TIME = 1
@@ -250,8 +249,8 @@ func _on_DrillingTimer_timeout():
 		closest_block.do_damage()
 
 func add_score(score):
-	SCORE += score
-	emit_signal("score_changed", SCORE, score)
+	PlayerVariables.score += score
+	emit_signal("score_changed", PlayerVariables.score, score)
 
 func add_coin(nb):
 	COINS += nb

@@ -8,6 +8,7 @@
 [ext_resource path="res://MainMenu/GameOver.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GameTemplate/Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://Levels/ScoreUI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Levels/Music.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Element/Decor/Background.tscn" type="PackedScene" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -337,6 +338,9 @@ texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WaterLayer"]
 anims/Water = SubResource( 10 )
+
+[node name="Music" parent="." instance=ExtResource( 10 )]
+
 [connection signal="timeout" from="CollapseTimer" to="." method="goto_next_level"]
 [connection signal="dig_block" from="Player/PlayerBody" to="." method="_on_PlayerBody_dig_block"]
 [connection signal="animation_finished" from="WaterLayer/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
