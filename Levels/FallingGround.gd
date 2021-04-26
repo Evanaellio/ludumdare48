@@ -16,7 +16,9 @@ var level_count = 0
 
 var collapse_time = 10 # initial timer, should decrease when difficulty increases
 
-var themes = ["Basic", "Wood"]
+var themes = ["Basic", "Wood", "Dark"]
+var current_level_theme = themes[0]
+var update_theme = false
 
 var mobs = {
 	"Basic": {
@@ -41,14 +43,14 @@ func _ready():
 	load_floors()
 	next_level = instanciate_random_level(transform.origin)
 	goto_next_level()
-	
+
 	# reset water position
 	$WaterLayer/WaterCurrent.rotation_degrees = 0
 	$WaterLayer/WaterCurrent.position.y = 48
 	$WaterLayer/WaterNext.position.y = 400
 	$WaterLayer/WaterCurrent.scale.y = 4.5
 	$WaterLayer/WaterNext.scale.y = 1.5
-	
+
 	$Player/PlayerBody.connect("hp_changed", self, "_on_Player_hp_changed")
 	$Player/PlayerBody.connect("score_changed", self, "_on_Player_score_changed")
 
@@ -70,6 +72,12 @@ func instanciate_random_level(position):
 	var random_level =  choice.instance()
 	random_level.global_position = position
 	var theme = themes[int(level_count / 5) % themes.size()]
+	if update_theme:
+		update_theme = false
+		$ParallaxBackground/ParallaxLayer/Background.update_biome(theme)
+	if current_level_theme != theme:
+		current_level_theme = theme
+		update_theme = true
 	random_level.get_node('FloorBase').theme = theme
 	populate_level(random_level, theme)
 	add_child(random_level)
@@ -96,8 +104,8 @@ func _on_PlayerBody_dig_block(block):
 	breaking_block_pos = block.global_position
 	if block.can_collapse_floor:
 		$CollapseTimer.start(max(0.01, $CollapseTimer.time_left - collapse_time / 4))
-	
-	
+
+
 func playWaterTransition():
 	if $WaterLayer/AnimationPlayer.is_playing():
 		$WaterLayer/AnimationPlayer.stop(true)
@@ -117,7 +125,7 @@ func _on_Player_hp_changed(hp: int):
 	$CanvasLayer/HP/Heart1.frame = 0 if hp > 1 else (1 if hp > 0 else 2)
 	$CanvasLayer/HP/Heart2.frame = 0 if hp > 3 else (1 if hp > 2 else 2)
 	$CanvasLayer/HP/Heart3.frame = 0 if hp > 5 else (1 if hp > 4 else 2)
-	
+
 	if hp < 1:
 		Game.emit_signal("ChangeScene", RIP_Screen)
 
@@ -141,22 +149,22 @@ func random_weighted(weighted: Dictionary):
 func populate_level(level, theme):
 	var enemy_min = 1 + (level_count / 4) * 1
 	var enemy_max = 3 + (level_count / 4) * 2
-	
+
 	var nb = rand_range(enemy_min, enemy_max + 1) as int
-	
+
 	for i in range(0, nb):
 		var types = mobs[theme]
-		
+
 		var type = random_weighted(types)
-		
+
 		type = types.keys()[randi() % types.size()]
-		
+
 		var prefab = load("res://Element/Mobs/" + type + ".tscn")
 		var mob = prefab.instance()
-		
+
 		mob.position.y = 96
 		mob.position.x = rand_range(32.0, 23*32.0)
-		
+
 		level.add_child(mob)
 
 func _on_block_coin_drilled(nb):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Levels/FallingGround.gd" type="Script" id=1]
 [ext_resource path="res://Levels/ShakyCamera2D.gd" type="Script" id=2]
@@ -7,37 +7,31 @@
 [ext_resource path="res://Assets/Sprite/Player/heart.png" type="Texture" id=5]
 [ext_resource path="res://MainMenu/GameOver.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GameTemplate/Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=7]
-[ext_resource path="res://Assets/Sprite/Decor/Background_basic.png" type="Texture" id=8]
+[ext_resource path="res://Element/Decor/Background.tscn" type="PackedScene" id=9]
 
-[sub_resource type="ShaderMaterial" id=1]
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 5 )
 region = Rect2( 16, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 5 )
 region = Rect2( 32, 0, 16, 16 )
 
-[sub_resource type="SpriteFrames" id=14]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
+"frames": [ null, SubResource( 2 ), SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=5]
 size = 24
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 7 )
 
-[sub_resource type="Shader" id=16]
+[sub_resource type="Shader" id=6]
 code = "shader_type canvas_item;
 
 // Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
@@ -106,13 +100,13 @@ void fragment(){
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=17]
-shader = SubResource( 16 )
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
 shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
 shader_param/sprite_scale = Vector2( 10, 10 )
 shader_param/scale_x = 1.0
 
-[sub_resource type="Shader" id=18]
+[sub_resource type="Shader" id=8]
 code = "shader_type canvas_item;
 
 // Gonkee's water shader for Godot 3 - full tutorial https://youtu.be/uhMAHpV_cDg
@@ -181,8 +175,8 @@ void fragment(){
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=19]
-shader = SubResource( 18 )
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
 shader_param/blue_tint = Color( 0, 0.588235, 1, 1 )
 shader_param/sprite_scale = Vector2( 4, 4 )
 shader_param/scale_x = 2.0
@@ -260,13 +254,7 @@ RIP_Screen = ExtResource( 6 )
 motion_scale = Vector2( 1, 0.25 )
 motion_mirroring = Vector2( 768, 432 )
 
-[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-modulate = Color( 0.466667, 0.466667, 0.466667, 1 )
-material = SubResource( 1 )
-position = Vector2( 386.001, 219.296 )
-texture = ExtResource( 8 )
-region_enabled = true
-region_rect = Rect2( 0, 0, 800, 600 )
+[node name="Background" parent="ParallaxBackground/ParallaxLayer" instance=ExtResource( 9 )]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -275,24 +263,24 @@ region_rect = Rect2( 0, 0, 800, 600 )
 [node name="Heart1" type="AnimatedSprite" parent="CanvasLayer/HP"]
 position = Vector2( 24, 18 )
 scale = Vector2( 2, 2 )
-frames = SubResource( 14 )
+frames = SubResource( 4 )
 
 [node name="Heart2" type="AnimatedSprite" parent="CanvasLayer/HP"]
 position = Vector2( 60, 18 )
 scale = Vector2( 2, 2 )
-frames = SubResource( 14 )
+frames = SubResource( 4 )
 
 [node name="Heart3" type="AnimatedSprite" parent="CanvasLayer/HP"]
 position = Vector2( 96, 18 )
 scale = Vector2( 2, 2 )
-frames = SubResource( 14 )
+frames = SubResource( 4 )
 
 [node name="Score" type="Label" parent="CanvasLayer"]
 margin_left = 652.0
 margin_top = 8.0
 margin_right = 760.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 5 )
 text = "Score: 000000"
 align = 2
 __meta__ = {
@@ -319,19 +307,19 @@ wait_time = 0.25
 [node name="WaterLayer" type="Node2D" parent="."]
 
 [node name="WaterCurrent" type="Sprite" parent="WaterLayer"]
-material = SubResource( 17 )
+material = SubResource( 7 )
 position = Vector2( 384, 265.723 )
 scale = Vector2( 12, 4.68729 )
 texture = ExtResource( 4 )
 
 [node name="WaterNext" type="Sprite" parent="WaterLayer"]
-material = SubResource( 19 )
+material = SubResource( 9 )
 position = Vector2( 384, 500 )
 scale = Vector2( 12, 1e-05 )
 texture = ExtResource( 4 )
 
 [node name="WaterNextNext" type="Sprite" parent="WaterLayer"]
-material = SubResource( 19 )
+material = SubResource( 9 )
 position = Vector2( 384, 624 )
 scale = Vector2( 12, 1.5 )
 texture = ExtResource( 4 )
