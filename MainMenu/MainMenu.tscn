@@ -86,13 +86,13 @@ shader_param/blue_tint = Color( 0.0392157, 0.32549, 1, 1 )
 shader_param/sprite_scale = Vector2( 8, 4 )
 shader_param/scale_x = 1.0
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 64
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 36
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
@@ -163,7 +163,7 @@ margin_top = 260.0
 margin_right = 486.0
 margin_bottom = 400.0
 rect_clip_content = false
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[center][wave amp=100 freq=2]The Lost Treasure[/wave][/center]"
 text = "The Lost Treasure"
@@ -176,7 +176,7 @@ margin_top = 60.0
 margin_right = 418.0
 margin_bottom = 140.0
 rect_clip_content = false
-custom_fonts/normal_font = SubResource( 3 )
+custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
 bbcode_text = "[center][wave amp=100 freq=2]of the Bloody Pufferfishes[/wave][/center]"
 text = "of the Bloody Pufferfishes"
@@ -226,10 +226,10 @@ __meta__ = {
 margin_left = 530.0
 margin_top = 285.0
 margin_right = 702.0
-margin_bottom = 345.0
+margin_bottom = 349.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 6
+custom_constants/separation = 4
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -238,21 +238,20 @@ __meta__ = {
 [node name="NewGame" parent="UI/HBoxContainer" groups=[
 "MainMenu",
 ] instance=ExtResource( 1 )]
-margin_top = 3.0
 margin_right = 172.0
-margin_bottom = 17.0
+margin_bottom = 27.0
 text = "New Game"
 
 [node name="Options" parent="UI/HBoxContainer" instance=ExtResource( 1 )]
-margin_top = 23.0
+margin_top = 31.0
 margin_right = 172.0
-margin_bottom = 37.0
+margin_bottom = 58.0
 text = "Options"
 
 [node name="Exit" parent="UI/HBoxContainer" instance=ExtResource( 1 )]
-margin_top = 43.0
+margin_top = 62.0
 margin_right = 172.0
-margin_bottom = 57.0
+margin_bottom = 89.0
 text = "Exit"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
