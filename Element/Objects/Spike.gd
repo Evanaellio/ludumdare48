@@ -22,7 +22,10 @@ func _on_DamageArea_body_entered(body):
 	if name == "Player" or name.begins_with("Player"):
 		print("spike bumper: player bumped")
 		var player = get_node(p)
-		player.hurt()
+		
+		if not player.drilling: # Pogo jump on spikes using drill
+			player.hurt()
+		
 		player.knockback(Vector2(0, -25), global_position)
 
 	elif body.is_in_group("killable-mobs"):
