@@ -47,6 +47,11 @@ gravity = Vector2( 0, 10 )
 initial_velocity = 10.0
 angle = -90.0
 
+[node name="Timer" type="Timer" parent="CollisionShape2D/Sprite"]
+wait_time = 2.0
+autostart = true
+
 [connection signal="body_entered" from="CollisionShape2D/Sprite/BumperDetect" to="CollisionShape2D/Sprite" method="_on_BumperDetect_body_entered"]
 [connection signal="body_exited" from="CollisionShape2D/Sprite/BumperDetect" to="CollisionShape2D/Sprite" method="_on_BumperDetect_body_exited"]
 [connection signal="animation_finished" from="CollisionShape2D/Sprite/AnimationPlayer" to="CollisionShape2D/Sprite" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="CollisionShape2D/Sprite/Timer" to="CollisionShape2D/Sprite" method="_on_Timer_timeout"]

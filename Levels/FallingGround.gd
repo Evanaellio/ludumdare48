@@ -75,7 +75,7 @@ func instanciate_random_level(position):
 	var choice = floors[randi() % floors.size()]
 	var random_level =  choice.instance()
 	random_level.global_position = position
-	var theme = themes[int(level_count / 5) % themes.size()]
+	var theme = themes[int(level_count / 6) % themes.size()]
 	if update_theme:
 		update_theme = false
 		$ParallaxBackground/ParallaxLayer/Background.update_biome(theme)
@@ -154,8 +154,8 @@ func random_weighted(weighted: Dictionary):
 		target -= val
 
 func populate_level(level, theme):
-	var enemy_min = 1 + (level_count / 4) * 1
-	var enemy_max = 3 + (level_count / 4) * 2
+	var enemy_min = 1 + (level_count / 5) * 1
+	var enemy_max = 3 + (level_count / 5) * 2
 
 	var nb = rand_range(enemy_min, enemy_max + 1) as int
 
