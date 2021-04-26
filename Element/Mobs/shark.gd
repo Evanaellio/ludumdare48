@@ -37,8 +37,8 @@ func _on_BumperDetect_body_entered(body):
 			print("shark bumper: player bumped")
 			var player = get_node(p)
 			player.hurt()
-			if dashing:
-				stop_dash()
+#			if dashing:
+#				stop_dash()
 			player.knockback(Vector2(0, -25), global_position)
 
 
@@ -59,18 +59,18 @@ func _on_PlayerDetect_body_entered(body):
 			#print("shark is not happy")
 			if triggered_count >= 1 && !dashing:
 				print("shark attacks")
-				var anim_timer = get_node("AnimationPlayer").current_animation_position
-				body_flipped = anim_timer < 2.0 || anim_timer > 6.0
-				if body_flipped:
-					get_parent().rotation_degrees = 90.0
-				get_node("AnimationPlayer").stop()
-				var shark = get_parent().get_parent()
-				var vec = (shark.global_position - player.global_position).normalized()
-				shark.apply_impulse(Vector2.ZERO, vec * -100)
-				var old_angle = shark.rotation_degrees
-				shark.look_at(shark.global_position + vec * 25)
-				body_h_flipped = abs(old_angle - shark.rotation_degrees)  > 90
-				dashing = true
+#				var anim_timer = get_node("AnimationPlayer").current_animation_position
+#				body_flipped = anim_timer < 2.0 || anim_timer > 6.0
+#				if body_flipped:
+#					get_parent().rotation_degrees = 90.0
+#				get_node("AnimationPlayer").stop()
+#				var shark = get_parent().get_parent()
+#				var vec = (shark.global_position - player.global_position).normalized()
+#				shark.apply_impulse(Vector2.ZERO, vec * -100)
+#				var old_angle = shark.rotation_degrees
+#				shark.look_at(shark.global_position + vec * 25)
+#				body_h_flipped = abs(old_angle - shark.rotation_degrees)  > 90
+#				dashing = true
 
 		else:
 			is_triggered = true
@@ -79,8 +79,9 @@ func _on_PlayerDetect_body_entered(body):
 
 
 func _on_PlayerDetect_body_exited(body):
-	if dashing:
-		stop_dash()
+	pass
+#	if dashing:
+#		stop_dash()
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
