@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Sprite/Moving/Pufferfish.png" type="Texture" id=1]
 [ext_resource path="res://Element/Mobs/pufferfish.gd" type="Script" id=2]
+[ext_resource path="res://Element/Mobs/mob_material.tres" type="PhysicsMaterial" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 20.0897
@@ -75,6 +76,7 @@ radius = 26.6301
 [node name="Pufferfish" type="RigidBody2D" groups=[
 "killable-mobs",
 ]]
+physics_material_override = ExtResource( 3 )
 gravity_scale = 0.0
 
 [node name="Sprite" type="Sprite" parent="."]

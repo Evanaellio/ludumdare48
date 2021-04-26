@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Sprite/Moving/Squid.png" type="Texture" id=1]
 [ext_resource path="res://Element/Mobs/squid.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Sprite/Static/Ink.png" type="Texture" id=3]
+[ext_resource path="res://Element/Mobs/mob_material.tres" type="PhysicsMaterial" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 8.0
@@ -15,6 +16,7 @@ height = 9.7337
 "killable-mobs",
 ]]
 mode = 2
+physics_material_override = ExtResource( 4 )
 gravity_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
