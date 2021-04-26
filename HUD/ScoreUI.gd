@@ -18,6 +18,23 @@ func _ready():
 	pass # Replace with function body.
 
 
+func shift_incrementals(incremental):
+	if(incremental_1_anim.is_playing()):
+		incremental_2_digits.text = incremental_1_digits.text
+		incremental_2_anim.play("fade-once")
+		incremental_2_anim.seek(incremental_1_anim.current_animation_position)
+	
+	if(incremental_0_anim.is_playing()):
+		incremental_1_anim.stop()
+		incremental_1_digits.text = incremental_0_digits.text
+		incremental_1_anim.play("fade-once")
+		incremental_1_anim.seek(incremental_0_anim.current_animation_position)
+	
+	incremental_0_anim.stop()
+	incremental_0_digits.text = str(incremental)
+	incremental_0_anim.play("fade-once")
+
+
 func update_score():
 	var current_score = PlayerVariables.score
 	
@@ -30,50 +47,11 @@ func update_score():
 
 func updateUI(incremental: int):
 	update_score()
-	match current_incremental_used:
-		0:
-			incremental_0_digits.text = str(incremental)
-			incremental_0_anim.play("fade-once")
+	shift_incrementals(incremental)
+	if(current_incremental_used <= 2):
 			current_incremental_used += 1
-		1:
-			incremental_1_digits.text = incremental_0_digits.text
-			incremental_1_anim.play("fade-once")
-			incremental_1_anim.seek(incremental_0_anim.current_animation_position)
-			
-			incremental_0_anim.stop()
-			incremental_0_digits.text = str(incremental)
-			incremental_0_anim.play("fade-once")
-			current_incremental_used += 1
-		2:
-			incremental_2_digits.text = incremental_1_digits.text
-			incremental_2_anim.play("fade-once")
-			incremental_2_anim.seek(incremental_1_anim.current_animation_position)
-			
-			incremental_1_anim.stop()
-			incremental_1_digits.text = incremental_0_digits.text
-			incremental_1_anim.play("fade-once")
-			incremental_1_anim.seek(incremental_0_anim.current_animation_position)
-			
-			incremental_0_anim.stop()
-			incremental_0_digits.text = str(incremental)
-			incremental_0_anim.play("fade-once")
-			current_incremental_used += 1
-		3:
-			incremental_2_digits.text = incremental_1_digits.text
-			incremental_2_anim.play("fade-once")
-			incremental_2_anim.seek(incremental_1_anim.current_animation_position)
-			
-			incremental_1_anim.stop()
-			incremental_1_digits.text = incremental_0_digits.text
-			incremental_1_anim.play("fade-once")
-			incremental_1_anim.seek(incremental_0_anim.current_animation_position)
-			
-			incremental_0_anim.stop()
-			incremental_0_digits.text = str(incremental)
-			incremental_0_anim.play("fade-once")
-		_:
-			print("scoreUI: WTF")
-			pass
+	else:
+		print("score flooding")
 
 func _on_AnimationPlayer_inc0_animation_finished(anim_name):
 	current_incremental_used -= 1
