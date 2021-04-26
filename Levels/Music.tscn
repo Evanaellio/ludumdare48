@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Sounds/pirate.ogg" type="AudioStream" id=1]
+[ext_resource path="res://Assets/Sounds/ambiant.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Levels/Music.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Sounds/dark.ogg" type="AudioStream" id=4]
+
+[node name="Music" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Basic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "Music"
+
+[node name="Wood" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "Music"
+
+[node name="Dark" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "Music"
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
