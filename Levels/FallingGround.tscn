@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Levels/FallingGround.gd" type="Script" id=1]
 [ext_resource path="res://Levels/ShakyCamera2D.gd" type="Script" id=2]
@@ -8,6 +8,10 @@
 [ext_resource path="res://MainMenu/GameOver.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GameTemplate/Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://Element/Decor/Background.tscn" type="PackedScene" id=9]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 5 )
@@ -19,7 +23,7 @@ region = Rect2( 32, 0, 16, 16 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ null, SubResource( 2 ), SubResource( 3 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
