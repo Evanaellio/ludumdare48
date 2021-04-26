@@ -10,8 +10,8 @@ func _ready():
 	player.shaky_cam = self
 
 func _process(delta):
-		position.y = lerp(position.y, player.position.y + 184, delta * 3)
-		
+		position.y = lerp(position.y, player.position.y + 120, delta * 3)
+
 		if shake_amount > 0:
 			set_offset(Vector2(rand_range(-1.0, 1.0) * shake_amount, rand_range(-1.0, 1.0) * shake_amount))
 
