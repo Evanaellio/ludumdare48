@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Levels/FallingGround.gd" type="Script" id=1]
 [ext_resource path="res://Levels/ShakyCamera2D.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/Sprite/Player/heart.png" type="Texture" id=5]
 [ext_resource path="res://MainMenu/GameOver.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/GameTemplate/Assets/Fonts/m5x7.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Levels/ScoreUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Element/Decor/Background.tscn" type="PackedScene" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -30,7 +31,7 @@ animations = [ {
 } ]
 
 [sub_resource type="DynamicFont" id=5]
-size = 24
+size = 32
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 7 )
@@ -279,29 +280,23 @@ position = Vector2( 96, 18 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 4 )
 
-[node name="Score" type="Label" parent="CanvasLayer"]
-margin_left = 652.0
-margin_top = 8.0
-margin_right = 760.0
-margin_bottom = 27.0
-custom_fonts/font = SubResource( 5 )
-text = "Score: 000000"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Level" type="Label" parent="CanvasLayer"]
-margin_left = 652.0
-margin_top = 27.0
-margin_right = 732.0
-margin_bottom = 46.0
+margin_left = 617.352
+margin_top = 8.61522
+margin_right = 721.352
+margin_bottom = 34.6152
 custom_fonts/font = SubResource( 5 )
 text = "Level: 000"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ScoreUI" parent="CanvasLayer" instance=ExtResource( 8 )]
+margin_left = 616.921
+margin_top = 34.8579
+margin_right = 8.92114
+margin_bottom = -293.142
 
 [node name="ShakyCamera2D" type="Camera2D" parent="."]
 position = Vector2( 384, 216 )
@@ -342,7 +337,6 @@ texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WaterLayer"]
 anims/Water = SubResource( 10 )
-
 [connection signal="timeout" from="CollapseTimer" to="." method="goto_next_level"]
 [connection signal="dig_block" from="Player/PlayerBody" to="." method="_on_PlayerBody_dig_block"]
 [connection signal="animation_finished" from="WaterLayer/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

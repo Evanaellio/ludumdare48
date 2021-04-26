@@ -123,6 +123,9 @@ texture = ExtResource( 2 )
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="UI"]
 anchor_right = 1.0
@@ -184,43 +187,70 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Credit" type="RichTextLabel" parent="UI"]
-margin_left = 7.27966
-margin_top = 4.93345
-margin_right = 63.2797
-margin_bottom = 23.9335
-rect_clip_content = false
-custom_fonts/normal_font = ExtResource( 6 )
-text = " MADE BY"
+[node name="Credit" type="VBoxContainer" parent="UI"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 178.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="UI/Credit"]
-margin_left = 62.4605
-margin_top = -1.0
-margin_right = 124.46
-margin_bottom = 28.0
-rect_clip_content = false
-custom_fonts/normal_font = ExtResource( 6 )
-text = "Evanaellio
-Teanan"
+[node name="Label" type="Label" parent="UI/Credit"]
+margin_right = 174.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 6 )
+text = "A Game made by:"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UI/Credit"]
+margin_top = 30.0
+margin_right = 174.0
+margin_bottom = 86.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel4" type="RichTextLabel" parent="UI/Credit"]
-margin_left = 123.379
-margin_top = -1.2973
-margin_right = 185.379
-margin_bottom = 27.7027
-rect_clip_content = false
-custom_fonts/normal_font = ExtResource( 6 )
-text = "Salier
-Wolfy"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="DevName_0" type="VBoxContainer" parent="UI/Credit/HBoxContainer3"]
+margin_left = 3.0
+margin_right = 105.0
+margin_bottom = 56.0
+
+[node name="Label" type="Label" parent="UI/Credit/HBoxContainer3/DevName_0"]
+margin_right = 102.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 6 )
+text = "Evanaellio"
+
+[node name="Label2" type="Label" parent="UI/Credit/HBoxContainer3/DevName_0"]
+margin_top = 30.0
+margin_right = 102.0
+margin_bottom = 56.0
+custom_fonts/font = ExtResource( 6 )
+text = "Teanan"
+
+[node name="Spacing" type="VBoxContainer" parent="UI/Credit/HBoxContainer3"]
+margin_left = 109.0
+margin_right = 109.0
+margin_bottom = 56.0
+
+[node name="DevName_1" type="VBoxContainer" parent="UI/Credit/HBoxContainer3"]
+margin_left = 113.0
+margin_right = 171.0
+margin_bottom = 56.0
+
+[node name="Label" type="Label" parent="UI/Credit/HBoxContainer3/DevName_1"]
+margin_right = 58.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 6 )
+text = "Salier"
+
+[node name="Label2" type="Label" parent="UI/Credit/HBoxContainer3/DevName_1"]
+margin_top = 30.0
+margin_right = 58.0
+margin_bottom = 56.0
+custom_fonts/font = ExtResource( 6 )
+text = "Wolfy"
 
 [node name="HBoxContainer" type="VBoxContainer" parent="UI"]
 margin_left = 530.0
@@ -258,7 +288,6 @@ text = "Exit"
 stream = ExtResource( 8 )
 autoplay = true
 bus = "Music"
-
 [connection signal="pressed" from="UI/HBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Exit" to="." method="_on_Exit_pressed"]
