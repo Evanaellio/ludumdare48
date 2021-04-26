@@ -234,7 +234,7 @@ func set_drilling(new_drilling):
 	if drilling && !new_drilling:
 		$DrillingTimer.stop()
 	drilling = new_drilling
-	$Drill.visible = drilling
+	$Drill.set_drilling(drilling)
 	if closest_block:
 		$Drill.get_node("CPUParticles2D_Block").texture = closest_block.get_texture()
 		if !falling:
