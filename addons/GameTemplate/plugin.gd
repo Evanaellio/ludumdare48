@@ -14,7 +14,9 @@ const autoload_order: = [
 	'MenuEvent',
 	'Music',
 	'SfxManager',
-	'HtmlFocus'
+	'HtmlFocus',
+
+	'PlayerVariables'
 ]
 
 const autoload_list: = {
@@ -30,7 +32,9 @@ const autoload_list: = {
 	'SettingsAudio'			: 'res://addons/GameTemplate/Autoload/SettingsAudio.gd',
 	'SettingsControls'		: 'res://addons/GameTemplate/Autoload/SettingsControls.gd',
 	'SettingsLanguage'		: 'res://addons/GameTemplate/Autoload/SettingsLanguage.gd',
-	'SettingsSaveLoad'		: 'res://addons/GameTemplate/Autoload/SettingsSaveLoad.gd'}
+	'SettingsSaveLoad'		: 'res://addons/GameTemplate/Autoload/SettingsSaveLoad.gd',
+
+	'PlayerVariables'		: 'res://addons/GameTemplate/Autoload/PlayerVariables.gd'}
 
 
 func _enter_tree():
