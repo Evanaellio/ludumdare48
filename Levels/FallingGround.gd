@@ -34,7 +34,10 @@ var mobs = {
 		"pufferfish": 5,
 	},
 	"Dark": {
-		"anglerfish": 10
+		"": 40,
+		"shark": 15,
+		"anglerfish": 35,
+		"seastar": 10
 	}
 }
 
@@ -161,7 +164,8 @@ func populate_level(level, theme):
 
 		var type = random_weighted(types)
 
-		type = types.keys()[randi() % types.size()]
+		if type == "":
+			continue
 
 		var prefab = load("res://Element/Mobs/" + type + ".tscn")
 		var mob = prefab.instance()
