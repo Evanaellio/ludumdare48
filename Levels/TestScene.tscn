@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/m5x7_16.tres" type="DynamicFont" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Element/Objects/Spike.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Element/Mobs/pufferfish.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Element/Items/Coin.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Element/Mobs/anglerfish.tscn" type="PackedScene" id=10]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
@@ -370,10 +371,13 @@ position = Vector2( 496, 248 )
 Sprite_Type = "Dark"
 
 [node name="Coin" parent="." instance=ExtResource( 9 )]
-position = Vector2( 320, 224 )
+position = Vector2( 616, 232 )
 
 [node name="Spike2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 272, 248 )
+position = Vector2( 32, 248 )
 Sprite_Type = "Wood"
+
+[node name="Anglerfish" parent="." instance=ExtResource( 10 )]
+position = Vector2( 336, 224 )
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_Button_pressed"]
